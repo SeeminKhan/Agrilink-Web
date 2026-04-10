@@ -6,7 +6,7 @@ import { useAuth, type Role } from '../lib/AuthContext';
 export default function Signup() {
   const [show, setShow] = useState(false);
   const [params] = useSearchParams();
-  const [role, setRole] = useState<Role>(params.get('role') === 'buyer' ? 'buyer' : 'farmer');
+  const [role, setRole] = useState<Role>(params.get('role') === 'buyer' ? 'buyer' : params.get('role') === 'recruiter' ? 'recruiter' : 'farmer');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -23,7 +23,7 @@ export default function Signup() {
     setError('');
     setTimeout(() => {
       signup(`${firstName} ${lastName}`.trim(), email, role);
-      navigate(role === 'farmer' ? '/farmer/dashboard' : '/buyer/dashboard');
+      navigate(role === 'farmer' ? '/farmer/dashboard' : role === 'recruiter' ? '/recruiter/dashboard' : '/buyer/dashboard');
     }, 900);
   };
 
@@ -77,11 +77,11 @@ export default function Signup() {
 
           {/* Role toggle */}
           <div className="flex gap-2 p-1 bg-gray-100 rounded-2xl mb-6">
-            {(['farmer', 'buyer'] as Role[]).map(r => (
+            {(['farmer', 'buyer', 'recruiter'] as Role[]).map(r => (
               <button key={r} onClick={() => setRole(r)}
                 className={`flex-1 py-2.5 rounded-xl text-sm font-bold transition-all ${role === r ? 'bg-white shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
                 style={role === r ? { color: '#0D592A' } : {}}>
-                {r === 'farmer' ? 'Farmer' : 'Buyer'}
+                {r.charAt(0).toUpperCase() + r.slice(1)}
               </button>
             ))}
           </div>

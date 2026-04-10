@@ -97,7 +97,7 @@ export default function FarmerDashboard() {
             {[
               { label: 'Add New Listing', to: '/farmer/add-listing', bg: '#f0f7f3', color: '#0D592A' },
               { label: 'Get AI Price', to: '/farmer/ai-price', bg: '#faf5ff', color: '#7c3aed' },
-              { label: 'View Training', to: '/farmer/training', bg: '#eff6ff', color: '#1d4ed8' },
+              { label: 'Jobs & Training', to: '/farmer/training', bg: '#eff6ff', color: '#1d4ed8' },
               { label: 'Update Profile', to: '/farmer/settings', bg: '#f9fafb', color: '#374151' },
             ].map(a => (
               <Link key={a.label} to={a.to} className="flex items-center justify-between px-4 py-3 rounded-xl hover:opacity-80 transition text-sm font-semibold"

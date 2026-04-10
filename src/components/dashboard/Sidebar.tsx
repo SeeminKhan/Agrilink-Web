@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   Sprout, LayoutDashboard, List, PlusCircle, Sparkles, BookOpen,
   Settings, LogOut, ChevronLeft, ChevronRight,
-  Search, ShieldCheck, Package
+  Search, ShieldCheck, Package, Briefcase, Users, BarChart2, ClipboardList,
 } from 'lucide-react';
 import { useAuth } from '../../lib/AuthContext';
 
@@ -14,7 +14,7 @@ const farmerNav: NavItem[] = [
   { icon: List, label: 'My Listings', to: '/farmer/listings' },
   { icon: PlusCircle, label: 'Add Listing', to: '/farmer/add-listing' },
   { icon: Sparkles, label: 'AI Price', to: '/farmer/ai-price' },
-  { icon: BookOpen, label: 'Job Training', to: '/farmer/training' },
+  { icon: BookOpen, label: 'Jobs & Training', to: '/farmer/training' },
   { icon: Settings, label: 'Settings', to: '/farmer/settings' },
 ];
 
@@ -26,12 +26,21 @@ const buyerNav: NavItem[] = [
   { icon: Settings, label: 'Settings', to: '/buyer/settings' },
 ];
 
-export default function Sidebar({ role }: { role: 'farmer' | 'buyer' }) {
+const recruiterNav: NavItem[] = [
+  { icon: LayoutDashboard, label: 'Dashboard', to: '/recruiter/dashboard' },
+  { icon: PlusCircle, label: 'Post Job', to: '/recruiter/post-job' },
+  { icon: ClipboardList, label: 'My Listings', to: '/recruiter/listings' },
+  { icon: Users, label: 'Applicants', to: '/recruiter/applicants' },
+  { icon: BarChart2, label: 'Analytics', to: '/recruiter/analytics' },
+  { icon: Settings, label: 'Settings', to: '/recruiter/settings' },
+];
+
+export default function Sidebar({ role }: { role: 'farmer' | 'buyer' | 'recruiter' }) {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { logout } = useAuth();
-  const nav = role === 'farmer' ? farmerNav : buyerNav;
+  const nav = role === 'farmer' ? farmerNav : role === 'recruiter' ? recruiterNav : buyerNav;
 
   const handleLogout = () => { logout(); navigate('/'); };
 
@@ -51,8 +60,10 @@ export default function Sidebar({ role }: { role: 'farmer' | 'buyer' }) {
           <span className="text-xs font-bold px-2.5 py-1 rounded-full"
             style={role === 'farmer'
               ? { backgroundColor: '#f0f7f3', color: '#0D592A' }
+              : role === 'recruiter'
+              ? { backgroundColor: '#fffbeb', color: '#92400e' }
               : { backgroundColor: '#eff6ff', color: '#1d4ed8' }}>
-            {role === 'farmer' ? 'Farmer' : 'Buyer'}
+            {role === 'farmer' ? 'Farmer' : role === 'recruiter' ? 'Recruiter' : 'Buyer'}
           </span>
         </div>
       )}

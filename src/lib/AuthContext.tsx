@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 import type { ReactNode } from 'react';
 
-export type Role = 'farmer' | 'buyer';
+export type Role = 'farmer' | 'buyer' | 'recruiter';
 
 export interface AuthUser {
   name: string;
@@ -20,15 +20,17 @@ const MOCK_USERS: Record<string, AuthUser & { password: string }> = {
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80',
     location: 'Nairobi, Kenya',
   },
-  'buyer@demo.com': {
-    name: 'Sarah Osei',
-    email: 'buyer@demo.com',
+  'recruiter@demo.com': {
+    name: 'David Kariuki',
+    email: 'recruiter@demo.com',
     password: 'password',
-    role: 'buyer',
-    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&q=80',
-    location: 'Accra, Ghana',
+    role: 'recruiter' as const,
+    avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&q=80',
+    location: 'Nairobi, Kenya',
   },
 };
+
+
 
 interface AuthCtx {
   user: AuthUser | null;
@@ -56,6 +58,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       role,
       avatar: role === 'farmer'
         ? 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80'
+        : role === 'recruiter'
+        ? 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&q=80'
         : 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&q=80',
       location: 'Africa',
     });
@@ -69,6 +73,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       role,
       avatar: role === 'farmer'
         ? 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80'
+        : role === 'recruiter'
+        ? 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&q=80'
         : 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&q=80',
       location: 'Africa',
     });

@@ -1,0 +1,93 @@
+{
+  "info": {
+    "name": "AgriLink API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base", "value": "http://localhost:5000/api" },
+    { "key": "token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        { "name": "Register", "request": { "method": "POST", "url": "{{base}}/auth/register", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"name\":\"John Mwangi\",\"email\":\"farmer@demo.com\",\"password\":\"password\",\"role\":\"farmer\",\"location\":\"Nairobi, Kenya\"}" } } },
+        { "name": "Login", "request": { "method": "POST", "url": "{{base}}/auth/login", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"email\":\"farmer@demo.com\",\"password\":\"password\"}" } } },
+        { "name": "Send OTP", "request": { "method": "POST", "url": "{{base}}/auth/send-otp", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"email\":\"farmer@demo.com\"}" } } },
+        { "name": "Verify OTP", "request": { "method": "POST", "url": "{{base}}/auth/verify-otp", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"email\":\"farmer@demo.com\",\"otp\":\"123456\"}" } } },
+        { "name": "Get Me", "request": { "method": "GET", "url": "{{base}}/auth/me", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] } }
+      ]
+    },
+    {
+      "name": "Produce",
+      "item": [
+        { "name": "Get All", "request": { "method": "GET", "url": "{{base}}/produce" } },
+        { "name": "Get My Listings", "request": { "method": "GET", "url": "{{base}}/produce/my", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] } },
+        { "name": "Get Offline Cache", "request": { "method": "GET", "url": "{{base}}/produce/offline-cache" } },
+        { "name": "Get By ID", "request": { "method": "GET", "url": "{{base}}/produce/PRODUCE_ID" } },
+        { "name": "Create Listing", "request": { "method": "POST", "url": "{{base}}/produce", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "body": { "mode": "formdata", "formdata": [{ "key": "cropName", "value": "Tomatoes" }, { "key": "quantity", "value": "500" }, { "key": "grade", "value": "A" }, { "key": "location", "value": "Nairobi, Kenya" }, { "key": "priceManual", "value": "2.5" }] } } },
+        { "name": "Delete Listing", "request": { "method": "DELETE", "url": "{{base}}/produce/PRODUCE_ID", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] } }
+      ]
+    },
+    {
+      "name": "Marketplace",
+      "item": [
+        { "name": "Get All", "request": { "method": "GET", "url": "{{base}}/marketplace" } },
+        { "name": "Filter", "request": { "method": "POST", "url": "{{base}}/marketplace/filter", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"cropType\":\"tomato\",\"minPrice\":1,\"maxPrice\":5}" } } },
+        { "name": "QR Trace", "request": { "method": "GET", "url": "{{base}}/marketplace/qr/PRODUCE_ID" } }
+      ]
+    },
+    {
+      "name": "Trace",
+      "item": [
+        { "name": "Get Trace", "request": { "method": "GET", "url": "{{base}}/trace/PRODUCE_ID" } },
+        { "name": "Add Log", "request": { "method": "POST", "url": "{{base}}/trace/log", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"produceId\":\"PRODUCE_ID\",\"event\":\"harvested\",\"note\":\"Harvested in the morning\",\"location\":\"Nairobi\"}" } } }
+      ]
+    },
+    {
+      "name": "Jobs",
+      "item": [
+        { "name": "Get All Jobs", "request": { "method": "GET", "url": "{{base}}/jobs" } },
+        { "name": "Get Job By ID", "request": { "method": "GET", "url": "{{base}}/jobs/JOB_ID" } },
+        { "name": "Create Job", "request": { "method": "POST", "url": "{{base}}/jobs", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"title\":\"Farm Supervisor\",\"company\":\"GreenValley Farms\",\"location\":\"Nairobi\",\"type\":\"Full-time\",\"skill\":\"Expert\",\"wage\":\"$45/day\",\"duration\":\"6 months\"}" } } },
+        { "name": "Apply to Job", "request": { "method": "POST", "url": "{{base}}/jobs/apply", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"jobId\":\"JOB_ID\",\"experience\":\"3 years\"}" } } },
+        { "name": "My Applications", "request": { "method": "GET", "url": "{{base}}/jobs/applications/my", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] } },
+        { "name": "Update App Status", "request": { "method": "PATCH", "url": "{{base}}/jobs/applications/APP_ID/status", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"status\":\"Accepted\"}" } } }
+      ]
+    },
+    {
+      "name": "Analytics",
+      "item": [
+        { "name": "Price Trends", "request": { "method": "GET", "url": "{{base}}/analytics/price-trends", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] } },
+        { "name": "Crop Demand", "request": { "method": "GET", "url": "{{base}}/analytics/crop-demand", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] } },
+        { "name": "Heatmap", "request": { "method": "GET", "url": "{{base}}/analytics/heatmap", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] } },
+        { "name": "Farmer Income", "request": { "method": "GET", "url": "{{base}}/analytics/income/FARMER_ID", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] } }
+      ]
+    },
+    {
+      "name": "Matching",
+      "item": [
+        { "name": "For Buyer", "request": { "method": "GET", "url": "{{base}}/matching/for-buyer/BUYER_ID", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] } },
+        { "name": "For Farmer", "request": { "method": "GET", "url": "{{base}}/matching/for-farmer/FARMER_ID", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] } }
+      ]
+    },
+    {
+      "name": "Sync",
+      "item": [
+        { "name": "Sync Drafts", "request": { "method": "POST", "url": "{{base}}/sync/drafts", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"drafts\":[{\"cropName\":\"Maize\",\"quantity\":200,\"grade\":\"B\",\"location\":\"Kisumu\"}]}" } } }
+      ]
+    },
+    {
+      "name": "Voice",
+      "item": [
+        { "name": "Parse Intent", "request": { "method": "POST", "url": "{{base}}/voice/intent", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"text\":\"2 quintal tomatoes grade A\"}" } } }
+      ]
+    },
+    {
+      "name": "AI",
+      "item": [
+        { "name": "Quality Check", "request": { "method": "POST", "url": "{{base}}/ai/quality-check", "body": { "mode": "formdata", "formdata": [{ "key": "image", "type": "file", "src": "" }] } } }
+      ]
+    }
+  ]
+}

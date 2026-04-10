@@ -25,8 +25,15 @@ import ListingDetails from './pages/buyer/ListingDetails';
 import QualityVerification from './pages/buyer/QualityVerification';
 import Orders from './pages/buyer/Orders';
 
+// Recruiter
+import RecruiterDashboard from './pages/recruiter/RecruiterDashboard';
+import PostJob from './pages/recruiter/PostJob';
+import RecruiterListings from './pages/recruiter/RecruiterListings';
+import Applicants from './pages/recruiter/Applicants';
+import Analytics from './pages/recruiter/Analytics';
+
 const noLayoutRoutes = ['/login', '/signup', '/role-select'];
-const dashboardPrefixes = ['/farmer', '/buyer'];
+const dashboardPrefixes = ['/farmer', '/buyer', '/recruiter'];
 
 function Layout() {
   const location = useLocation();
@@ -66,6 +73,17 @@ function Layout() {
           <Route path="listing/:id" element={<ListingDetails />} />
           <Route path="quality" element={<QualityVerification />} />
           <Route path="orders" element={<Orders />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
+
+        {/* Recruiter dashboard */}
+        <Route path="/recruiter" element={<DashboardLayout role="recruiter" />}>
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<RecruiterDashboard />} />
+          <Route path="post-job" element={<PostJob />} />
+          <Route path="listings" element={<RecruiterListings />} />
+          <Route path="applicants" element={<Applicants />} />
+          <Route path="analytics" element={<Analytics />} />
           <Route path="settings" element={<Settings />} />
         </Route>
 

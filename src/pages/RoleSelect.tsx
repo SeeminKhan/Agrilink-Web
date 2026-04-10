@@ -1,6 +1,6 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
-import { ArrowRight, Sprout, ShoppingBag, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Sprout, ShoppingBag, Briefcase, CheckCircle2 } from 'lucide-react';
 
 const roles = [
   {
@@ -18,6 +18,14 @@ const roles = [
     perks: ['Browse 120K+ listings', 'Quality verification', 'Direct farmer contact', 'Price comparison'],
     gradientFrom: '#1d4ed8', gradientTo: '#1e40af',
     borderColor: '#1d4ed8', bgColor: '#eff6ff', badgeColor: '#1d4ed8', badgeBg: '#dbeafe',
+  },
+  {
+    id: 'recruiter', icon: Briefcase, title: "I'm a Recruiter", subtitle: 'Hire skilled farm labor',
+    description: 'Post agricultural jobs, manage applicants, and hire skilled farmers and laborers for your farm or agri-business.',
+    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80',
+    perks: ['Post unlimited jobs', 'Manage applicants', 'Hire verified farmers', 'Analytics dashboard'],
+    gradientFrom: '#92400e', gradientTo: '#78350f',
+    borderColor: '#d97706', bgColor: '#fffbeb', badgeColor: '#92400e', badgeBg: '#fde68a',
   },
 ];
 
@@ -46,7 +54,7 @@ export default function RoleSelect() {
       </div>
 
       <div className="flex-1 flex items-start justify-center px-4 pb-32">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-3xl">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full max-w-4xl">
           {roles.map(role => {
             const Icon = role.icon;
             const isSelected = selected === role.id || intent === role.id;

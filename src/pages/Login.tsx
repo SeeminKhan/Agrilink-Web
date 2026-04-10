@@ -13,6 +13,7 @@ export default function Login() {
   const [params] = useSearchParams();
   const role = (params.get('role') || 'farmer') as Role;
   const isFarmer = role === 'farmer';
+  const isRecruiter = role === 'recruiter';
 
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function Login() {
       const result = login(email, password, role);
       setLoading(false);
       if (result.ok) {
-        navigate(role === 'farmer' ? '/farmer/dashboard' : '/buyer/dashboard');
+        navigate(role === 'farmer' ? '/farmer/dashboard' : role === 'recruiter' ? '/recruiter/dashboard' : '/buyer/dashboard');
       } else {
         setError(result.error || 'Invalid credentials.');
       }
@@ -35,7 +36,7 @@ export default function Login() {
 
   const quickLogin = (demoEmail: string, demoRole: Role) => {
     login(demoEmail, 'password', demoRole);
-    navigate(demoRole === 'farmer' ? '/farmer/dashboard' : '/buyer/dashboard');
+    navigate(demoRole === 'farmer' ? '/farmer/dashboard' : demoRole === 'recruiter' ? '/recruiter/dashboard' : '/buyer/dashboard');
   };
 
   return (
@@ -59,14 +60,16 @@ export default function Login() {
           </Link>
           <div>
             <div className="inline-block bg-white/10 backdrop-blur border border-white/20 text-white text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              {isFarmer ? '🌾 Farmer Portal' : '🛒 Buyer Portal'}
+              {isFarmer ? '🌾 Farmer Portal' : isRecruiter ? '💼 Recruiter Portal' : '🛒 Buyer Portal'}
             </div>
             <h2 className="text-4xl font-black text-white mb-4 leading-tight">
-              {isFarmer ? 'Welcome back,\nFarmer.' : 'Welcome back,\nBuyer.'}
+              {isFarmer ? 'Welcome back,\nFarmer.' : isRecruiter ? 'Welcome back,\nRecruiter.' : 'Welcome back,\nBuyer.'}
             </h2>
             <p className="text-white/70 text-base leading-relaxed">
               {isFarmer
                 ? 'Manage your listings, track sales, and connect with buyers across Africa.'
+                : isRecruiter
+                ? 'Post jobs, manage applicants, and hire skilled agricultural workers.'
                 : 'Browse fresh produce, verify quality, and connect directly with farmers.'}
             </p>
             <div className="mt-8 glass rounded-2xl p-4">
@@ -108,7 +111,7 @@ export default function Login() {
           {/* Demo quick-access */}
           <div className="border rounded-2xl p-4 mb-6" style={{ backgroundColor: '#f0f7f3', borderColor: '#aed4bc' }}>
             <p className="text-xs font-bold mb-2" style={{ color: '#0D592A' }}>Quick Demo Access</p>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               <button onClick={() => quickLogin('farmer@demo.com', 'farmer')}
                 className="flex-1 py-2 text-white text-xs font-bold rounded-xl hover:opacity-90 transition"
                 style={{ backgroundColor: '#0D592A' }}>
@@ -117,6 +120,10 @@ export default function Login() {
               <button onClick={() => quickLogin('buyer@demo.com', 'buyer')}
                 className="flex-1 py-2 bg-blue-600 text-white text-xs font-bold rounded-xl hover:bg-blue-700 transition">
                 Enter as Buyer
+              </button>
+              <button onClick={() => quickLogin('recruiter@demo.com', 'recruiter')}
+                className="flex-1 py-2 bg-amber-600 text-white text-xs font-bold rounded-xl hover:bg-amber-700 transition">
+                Enter as Recruiter
               </button>
             </div>
           </div>
@@ -180,9 +187,9 @@ export default function Login() {
           </div>
 
           <p className="text-center text-xs text-gray-400 mt-6">
-            Not {isFarmer ? 'a farmer' : 'a buyer'}?{' '}
-            <Link to={`/login?role=${isFarmer ? 'buyer' : 'farmer'}`} className="text-green-600 hover:underline font-medium">
-              Switch to {isFarmer ? 'Buyer' : 'Farmer'} login
+            Not {isFarmer ? 'a farmer' : isRecruiter ? 'a recruiter' : 'a buyer'}?{' '}
+            <Link to="/role-select" className="text-green-600 hover:underline font-medium">
+              Switch role
             </Link>
           </p>
         </div>

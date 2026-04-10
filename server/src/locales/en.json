@@ -1,0 +1,22 @@
+{
+  "auth": {
+    "missingFields": "Please provide all required fields.",
+    "emailTaken": "An account with this email already exists.",
+    "invalidCredentials": "Invalid email or password.",
+    "userNotFound": "No account found with this email.",
+    "otpSent": "OTP sent to your email.",
+    "otpInvalid": "Invalid or expired OTP.",
+    "unauthorized": "Authentication required.",
+    "tokenInvalid": "Invalid or expired token.",
+    "forbidden": "You do not have permission to perform this action."
+  },
+  "produce": {
+    "notFound": "Produce listing not found.",
+    "deleted": "Listing deleted successfully."
+  },
+  "jobs": {
+    "notFound": "Job not found.",
+    "deleted": "Job deleted successfully.",
+    "alreadyApplied": "You have already applied for this job."
+  }
+}

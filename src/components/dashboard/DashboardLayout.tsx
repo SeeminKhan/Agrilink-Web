@@ -5,7 +5,7 @@ import Sidebar from './Sidebar';
 import { useAuth } from '../../lib/AuthContext';
 
 interface DashboardLayoutProps {
-  role: 'farmer' | 'buyer';
+  role: 'farmer' | 'buyer' | 'recruiter';
 }
 
 export default function DashboardLayout({ role }: DashboardLayoutProps) {
