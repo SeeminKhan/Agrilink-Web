@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Users, MapPin, Phone, CheckCircle, XCircle, X, Briefcase, Clock } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { jobsStore, type Applicant } from '../../lib/jobsStore';
 import { staggerContainer, slideUp, scaleIn } from '../../lib/motion';
 
@@ -92,6 +93,7 @@ export default function Applicants() {
   const [jobs, setJobs] = useState(jobsStore.getAll());
   const [filter, setFilter] = useState<'All' | Applicant['status']>('All');
   const [selected, setSelected] = useState<Applicant | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => jobsStore.subscribe(() => setJobs(jobsStore.getAll())), []);
 
@@ -106,8 +108,8 @@ export default function Applicants() {
   return (
     <div className="animate-fade-in">
       <div className="mb-6">
-        <h1 className="text-2xl font-black text-gray-900">Applicants</h1>
-        <p className="text-sm text-gray-500 mt-0.5">{allApplicants.length} total application{allApplicants.length !== 1 ? 's' : ''}</p>
+        <h1 className="text-2xl font-black text-gray-900">{t('applicants.title')}</h1>
+        <p className="text-sm text-gray-500 mt-0.5">{allApplicants.length !== 1 ? t('applicants.totalApplicationsPlural', { count: allApplicants.length }) : t('applicants.totalApplications', { count: allApplicants.length })}</p>
       </div>
 
       {/* Filter */}
@@ -124,8 +126,8 @@ export default function Applicants() {
       {filtered.length === 0 ? (
         <div className="text-center py-20 text-gray-400">
           <Users className="w-10 h-10 mx-auto mb-3 opacity-30" />
-          <p className="font-semibold">No applicants yet</p>
-          <p className="text-sm mt-1">Applications will appear here once farmers apply to your jobs</p>
+          <p className="font-semibold">{t('applicants.noApplicants')}</p>
+          <p className="text-sm mt-1">{t('applicants.noApplicantsHint')}</p>
         </div>
       ) : (
         <motion.div variants={staggerContainer} initial="hidden" animate="show"
@@ -151,11 +153,11 @@ export default function Applicants() {
                   <button onClick={() => updateStatus(a, 'Accepted')}
                     className="flex-1 py-2 rounded-xl text-white text-xs font-bold hover:opacity-90 transition"
                     style={{ backgroundColor: '#0D592A' }}>
-                    Accept
+                    {t('applicants.accept')}
                   </button>
                   <button onClick={() => updateStatus(a, 'Rejected')}
                     className="flex-1 py-2 rounded-xl bg-red-50 text-red-500 text-xs font-bold hover:bg-red-100 transition">
-                    Reject
+                    {t('applicants.reject')}
                   </button>
                 </div>
               )}

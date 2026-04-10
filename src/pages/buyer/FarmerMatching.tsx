@@ -5,6 +5,7 @@ import {
   Phone, MessageCircle, Star, TrendingUp, Package,
   ShieldCheck, Leaf,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { farmerListingsStore, type FarmerListing } from '../../lib/farmerListingsStore';
 import { MH_MARKETS } from '../../lib/priceService';
 
@@ -113,6 +114,7 @@ export default function FarmerMatching() {
   });
   const [matches, setMatches] = useState<FarmerMatch[] | null>(null);
   const [error, setError]     = useState('');
+  const { t } = useTranslation();
 
   useEffect(() => farmerListingsStore.subscribe(() => setListings(farmerListingsStore.getAll())), []);
 
@@ -146,9 +148,9 @@ export default function FarmerMatching() {
           <div className="w-8 h-8 bg-blue-100 rounded-xl flex items-center justify-center">
             <Users className="w-4 h-4 text-blue-600" />
           </div>
-          <h1 className="text-2xl font-black text-gray-900">Best Farmer Matches</h1>
+          <h1 className="text-2xl font-black text-gray-900">{t('farmerMatching.title')}</h1>
         </div>
-        <p className="text-gray-500 text-sm">Find the best farmers for your crop requirement based on price, distance, and availability.</p>
+        <p className="text-gray-500 text-sm">{t('farmerMatching.subtitle')}</p>
       </div>
 
       {/* Input card */}

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { BarChart2, Eye, Users, CheckCircle, TrendingUp } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { jobsStore } from '../../lib/jobsStore';
 import { staggerContainer, slideUp } from '../../lib/motion';
 
 export default function Analytics() {
   const [jobs, setJobs] = useState(jobsStore.getAll());
+  const { t } = useTranslation();
   useEffect(() => jobsStore.subscribe(() => setJobs(jobsStore.getAll())), []);
 
   const totalViews = jobs.reduce((s, j) => s + j.views, 0);
@@ -19,18 +21,18 @@ export default function Analytics() {
   return (
     <div className="animate-fade-in">
       <div className="mb-6">
-        <h1 className="text-2xl font-black text-gray-900">Analytics</h1>
-        <p className="text-sm text-gray-500 mt-0.5">Track your hiring performance</p>
+        <h1 className="text-2xl font-black text-gray-900">{t('analytics.title')}</h1>
+        <p className="text-sm text-gray-500 mt-0.5">{t('analytics.subtitle')}</p>
       </div>
 
       {/* Summary cards */}
       <motion.div variants={staggerContainer} initial="hidden" animate="show"
         className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {[
-          { label: 'Total Views', value: totalViews, icon: Eye, color: 'bg-blue-50 text-blue-600' },
-          { label: 'Total Applicants', value: totalApplicants, icon: Users, color: 'bg-amber-50 text-amber-600' },
-          { label: 'Hired', value: totalAccepted, icon: CheckCircle, color: 'bg-green-50 text-green-600' },
-          { label: 'Hiring Rate', value: `${hiringRate}%`, icon: TrendingUp, color: 'bg-purple-50 text-purple-600' },
+          { label: t('analytics.totalViews'), value: totalViews, icon: Eye, color: 'bg-blue-50 text-blue-600' },
+          { label: t('analytics.totalApplicants'), value: totalApplicants, icon: Users, color: 'bg-amber-50 text-amber-600' },
+          { label: t('analytics.hired'), value: totalAccepted, icon: CheckCircle, color: 'bg-green-50 text-green-600' },
+          { label: t('analytics.hiringRate'), value: `${hiringRate}%`, icon: TrendingUp, color: 'bg-purple-50 text-purple-600' },
         ].map(({ label, value, icon: Icon, color }) => (
           <motion.div key={label} variants={slideUp} className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 card-hover">
             <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${color}`}>
@@ -47,10 +49,10 @@ export default function Analytics() {
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
           <div className="flex items-center gap-2 mb-5">
             <BarChart2 className="w-4 h-4 text-amber-600" />
-            <h3 className="font-bold text-gray-800">Applications per Job</h3>
+            <h3 className="font-bold text-gray-800">{t('analytics.applicationsPerJob')}</h3>
           </div>
           {jobs.length === 0 ? (
-            <p className="text-sm text-gray-400 text-center py-8">No data yet</p>
+            <p className="text-sm text-gray-400 text-center py-8">{t('analytics.noData')}</p>
           ) : (
             <div className="space-y-3">
               {jobs.map(j => (
@@ -76,10 +78,10 @@ export default function Analytics() {
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
           <div className="flex items-center gap-2 mb-5">
             <Eye className="w-4 h-4 text-blue-600" />
-            <h3 className="font-bold text-gray-800">Views vs Applications</h3>
+            <h3 className="font-bold text-gray-800">{t('analytics.viewsVsApplications')}</h3>
           </div>
           {jobs.length === 0 ? (
-            <p className="text-sm text-gray-400 text-center py-8">No data yet</p>
+            <p className="text-sm text-gray-400 text-center py-8">{t('analytics.noData')}</p>
           ) : (
             <div className="space-y-4">
               {jobs.map(j => (
@@ -116,7 +118,7 @@ export default function Analytics() {
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 lg:col-span-2">
           <div className="flex items-center gap-2 mb-5">
             <CheckCircle className="w-4 h-4 text-green-600" />
-            <h3 className="font-bold text-gray-800">Hiring Success by Job</h3>
+            <h3 className="font-bold text-gray-800">{t('analytics.hiringSuccess')}</h3>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {jobs.map(j => {

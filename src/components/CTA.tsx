@@ -1,7 +1,10 @@
 import { ArrowRight, Sprout } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function CTA() {
+  const { t } = useTranslation();
+
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,23 +18,21 @@ export default function CTA() {
             <div className="text-center lg:text-left">
               <div className="flex items-center justify-center lg:justify-start gap-2 mb-4">
                 <Sprout className="w-5 h-5 text-green-300" />
-                <span className="text-green-200 font-semibold text-sm uppercase tracking-widest">Join AgriLink Today</span>
+                <span className="text-green-200 font-semibold text-sm uppercase tracking-widest">{t('cta.badge')}</span>
               </div>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-3">
-                Ready to Transform Your <br className="hidden sm:block" />Agricultural Business?
+                {t('cta.title')}
               </h2>
-              <p className="text-green-100 max-w-lg">
-                Join over 50,000 farmers and buyers already using AgriLink to trade smarter, earn more, and grow together.
-              </p>
+              <p className="text-green-100 max-w-lg">{t('cta.subtitle')}</p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 shrink-0">
               <Link to="/signup" className="flex items-center justify-center gap-2 bg-white font-bold px-7 py-3.5 rounded-xl hover:bg-gray-50 transition shadow-lg"
                 style={{ color: '#0D592A' }}>
-                Get Started Free <ArrowRight className="w-4 h-4" />
+                {t('cta.getStarted')} <ArrowRight className="w-4 h-4" />
               </Link>
               <Link to="/marketplace" className="flex items-center justify-center gap-2 border-2 border-white/40 text-white font-bold px-7 py-3.5 rounded-xl hover:bg-white/10 transition">
-                Browse Marketplace
+                {t('cta.browseMarketplace')}
               </Link>
             </div>
           </div>

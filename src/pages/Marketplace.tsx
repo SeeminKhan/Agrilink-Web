@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Search, SlidersHorizontal, ChevronDown } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import ProductCard from '../components/ProductCard';
 import type { Product } from '../components/ProductCard';
 
@@ -22,6 +23,7 @@ export default function Marketplace() {
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
   const [sort, setSort] = useState('Newest');
+  const { t } = useTranslation();
 
   const filtered = allProducts.filter(p =>
     p.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -33,13 +35,13 @@ export default function Marketplace() {
       {/* Header */}
       <div className="bg-gradient-to-r from-green-700 to-emerald-600 py-12 px-4">
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-3">Agricultural Marketplace</h1>
-          <p className="text-green-100 mb-6">Browse fresh produce, grains, livestock and more from verified farmers</p>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-3">{t('marketplace.title')}</h1>
+          <p className="text-green-100 mb-6">{t('marketplace.subtitle')}</p>
           <div className="max-w-xl mx-auto relative">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
             <input
               type="text"
-              placeholder="Search products, locations..."
+              placeholder={t('marketplace.searchPlaceholder')}
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="w-full pl-12 pr-4 py-3.5 rounded-xl text-gray-800 outline-none focus:ring-2 focus:ring-green-400 shadow-lg"
@@ -66,7 +68,7 @@ export default function Marketplace() {
           </div>
           <div className="flex items-center gap-3 shrink-0">
             <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-600 hover:border-green-400 transition">
-              <SlidersHorizontal className="w-4 h-4" /> Filters
+              <SlidersHorizontal className="w-4 h-4" /> {t('marketplace.filters')}
             </button>
             <div className="relative">
               <select
@@ -81,7 +83,7 @@ export default function Marketplace() {
           </div>
         </div>
 
-        <p className="text-sm text-gray-500 mb-6">{filtered.length} products found</p>
+        <p className="text-sm text-gray-500 mb-6">{t('marketplace.productsFound', { count: filtered.length })}</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filtered.map(p => <ProductCard key={p.id} product={p} />)}

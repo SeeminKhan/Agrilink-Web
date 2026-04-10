@@ -5,6 +5,7 @@ import {
   ChevronRight, Info, CheckCircle, AlertCircle,
   CloudRain, Calendar, MapPin, Truck, Mic, MicOff, X,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { predictPrice, MH_MARKETS, type PriceResult } from '../../lib/priceService';
 import { farmerListingsStore } from '../../lib/farmerListingsStore';
 
@@ -74,6 +75,7 @@ export default function AIPrice() {
   const [transcript, setTranscript] = useState('');
   const [voiceErr, setVoiceErr]   = useState('');
   const recRef = useRef<SpeechRecognition | null>(null);
+  const { t } = useTranslation();
 
   const set = (k: keyof typeof form) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
@@ -140,9 +142,9 @@ export default function AIPrice() {
             <div className="w-8 h-8 bg-purple-100 rounded-xl flex items-center justify-center">
               <Sparkles className="w-4 h-4 text-purple-600" />
             </div>
-            <h1 className="text-2xl font-black text-gray-900">AI Price Prediction</h1>
+            <h1 className="text-2xl font-black text-gray-900">{t('aiPrice.title')}</h1>
           </div>
-          <p className="text-gray-500 text-sm">Real-time mandi price prediction for Maharashtra crops.</p>
+          <p className="text-gray-500 text-sm">{t('aiPrice.subtitle')}</p>
         </div>
         {/* Voice button */}
         <div className="shrink-0">

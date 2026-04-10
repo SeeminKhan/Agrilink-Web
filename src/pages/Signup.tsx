@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { Sprout, Eye, EyeOff, User, Mail, Lock, Phone, MapPin, ArrowRight, CheckCircle2, AlertCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useAuth, type Role } from '../lib/AuthContext';
 
 export default function Signup() {
@@ -15,6 +16,7 @@ export default function Signup() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   const { signup } = useAuth();
   const navigate = useNavigate();
@@ -81,10 +83,10 @@ export default function Signup() {
           </Link>
 
           <div className="mb-6">
-            <h1 className="text-3xl font-black text-gray-900 mb-1">Create Account</h1>
+            <h1 className="text-3xl font-black text-gray-900 mb-1">{t('auth.createAccount')}</h1>
             <p className="text-gray-500 text-sm">
-              Already have an account?{' '}
-              <Link to="/login" className="text-green-600 font-semibold hover:underline">Sign in</Link>
+              {t('auth.alreadyAccount')}{' '}
+              <Link to="/login" className="text-green-600 font-semibold hover:underline">{t('auth.signIn')}</Link>
             </p>
           </div>
 
@@ -108,21 +110,21 @@ export default function Signup() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">First Name *</label>
+                <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">{t('auth.firstName')} *</label>
                 <div className="relative">
                   <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input type="text" placeholder="John" value={firstName} onChange={e => setFirstName(e.target.value)} className={inputClass} />
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Last Name</label>
+                <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">{t('auth.lastName')}</label>
                 <input type="text" placeholder="Doe" value={lastName} onChange={e => setLastName(e.target.value)}
                   className="w-full px-4 py-3.5 bg-white border border-gray-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-green-400 transition-all shadow-sm" />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Email Address *</label>
+              <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">{t('auth.email')} *</label>
               <div className="relative">
                 <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input type="email" placeholder="you@example.com" value={email} onChange={e => setEmail(e.target.value)} className={inputClass} />
@@ -130,7 +132,7 @@ export default function Signup() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Phone Number</label>
+              <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">{t('auth.phone')}</label>
               <div className="relative">
                 <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input type="tel" placeholder="+254 700 000 000" value={phone} onChange={e => setPhone(e.target.value)} className={inputClass} />
@@ -138,7 +140,7 @@ export default function Signup() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Location <span className="text-gray-300 normal-case font-normal">(optional)</span></label>
+              <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">{t('auth.location')}</label>
               <div className="relative">
                 <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input type="text" placeholder="City, Country" value={location} onChange={e => setLocation(e.target.value)} className={inputClass} />
@@ -146,7 +148,7 @@ export default function Signup() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Password *</label>
+              <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">{t('auth.password')} *</label>
               <div className="relative">
                 <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input type={show ? 'text' : 'password'} placeholder="Min. 6 characters"
@@ -169,8 +171,8 @@ export default function Signup() {
               className="w-full flex items-center justify-center gap-2 text-white font-bold py-3.5 rounded-2xl hover:opacity-90 transition-all shadow-lg disabled:opacity-60"
               style={{ backgroundColor: '#0D592A', boxShadow: '0 4px 16px -2px rgba(13,89,42,0.35)' }}>
               {loading
-                ? <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Creating account...</>
-                : <>Create Account <ArrowRight className="w-4 h-4" /></>}
+                ? <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> {t('auth.creatingAccount')}</>
+                : <>{t('auth.createAccount')} <ArrowRight className="w-4 h-4" /></>}
             </button>
           </form>
         </div>

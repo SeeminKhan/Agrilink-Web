@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Search, SlidersHorizontal, MapPin, Star, ShieldCheck, MessageCircle, Phone, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { getListings } from '../../lib/listingsData';
 import { farmerListingsStore } from '../../lib/farmerListingsStore';
 
@@ -15,6 +16,7 @@ export default function BrowseListings() {
   const [grade, setGrade] = useState('All Grades');
   const [location, setLocation] = useState('All Locations');
   const [showFilters, setShowFilters] = useState(false);
+  const { t } = useTranslation();
 
   // Re-read store whenever farmer adds/edits a listing
   useEffect(() => farmerListingsStore.subscribe(() => setAllListings(getListings())), []);
@@ -29,20 +31,20 @@ export default function BrowseListings() {
   return (
     <div className="animate-fade-in">
       <div className="mb-6">
-        <h1 className="text-2xl font-black text-gray-900">Browse Listings</h1>
-        <p className="text-gray-500 text-sm mt-0.5">Discover fresh produce from verified farmers across Africa.</p>
+        <h1 className="text-2xl font-black text-gray-900">{t('browseListings.title')}</h1>
+        <p className="text-gray-500 text-sm mt-0.5">{t('browseListings.subtitle')}</p>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3 mb-5">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-          <input type="text" placeholder="Search crops, farmers, locations..." value={search}
+          <input type="text" placeholder={t('browseListings.searchPlaceholder')} value={search}
             onChange={e => setSearch(e.target.value)}
             className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-green-300 transition" />
         </div>
         <button onClick={() => setShowFilters(!showFilters)}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-semibold transition ${showFilters ? 'bg-green-600 text-white border-green-600' : 'bg-white border-gray-200 text-gray-600 hover:border-green-300'}`}>
-          <SlidersHorizontal className="w-4 h-4" /> Filters
+          <SlidersHorizontal className="w-4 h-4" /> {t('browseListings.filters')}
         </button>
       </div>
 
@@ -50,7 +52,7 @@ export default function BrowseListings() {
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 mb-5 animate-slide-up">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2 block">Crop Type</label>
+              <label className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2 block">{t('browseListings.cropType')}</label>
               <div className="flex flex-wrap gap-2">
                 {cropTypes.map(c => (
                   <button key={c} onClick={() => setCropType(c)}
@@ -59,7 +61,7 @@ export default function BrowseListings() {
               </div>
             </div>
             <div>
-              <label className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2 block">Grade</label>
+              <label className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2 block">{t('browseListings.grade')}</label>
               <div className="flex flex-wrap gap-2">
                 {grades.map(g => (
                   <button key={g} onClick={() => setGrade(g)}
@@ -68,7 +70,7 @@ export default function BrowseListings() {
               </div>
             </div>
             <div>
-              <label className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2 block">Location</label>
+              <label className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2 block">{t('browseListings.location')}</label>
               <div className="flex flex-wrap gap-2">
                 {locations.map(l => (
                   <button key={l} onClick={() => setLocation(l)}
@@ -79,12 +81,12 @@ export default function BrowseListings() {
           </div>
           <button onClick={() => { setCropType('All'); setGrade('All Grades'); setLocation('All Locations'); }}
             className="mt-4 flex items-center gap-1 text-xs text-red-500 font-semibold hover:text-red-600 transition">
-            <X className="w-3.5 h-3.5" /> Clear all filters
+            <X className="w-3.5 h-3.5" /> {t('common.clearFilters')}
           </button>
         </div>
       )}
 
-      <p className="text-sm text-gray-400 mb-4">{filtered.length} listings found</p>
+      <p className="text-sm text-gray-400 mb-4">{t('browseListings.listingsFound', { count: filtered.length })}</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {filtered.map(item => (
@@ -119,7 +121,7 @@ export default function BrowseListings() {
               <div className="flex gap-2">
                 <Link to={`/buyer/listing/${item.id}`}
                   className="flex-1 text-center py-2 gradient-green text-white text-xs font-bold rounded-xl hover:opacity-90 transition">
-                  View Details
+                  {t('browseListings.viewDetails')}
                 </Link>
                 {/* WhatsApp message */}
                 <a href={`https://wa.me/${item.farmerWhatsApp}?text=Hi%20${encodeURIComponent(item.farmerOwner)}%2C%20I'm%20interested%20in%20your%20${encodeURIComponent(item.name)}%20listing%20on%20AgriLink.`}
@@ -143,8 +145,8 @@ export default function BrowseListings() {
       {filtered.length === 0 && (
         <div className="text-center py-20 text-gray-400">
           <Search className="w-12 h-12 mx-auto mb-3 opacity-30" />
-          <p className="font-semibold">No listings match your filters</p>
-          <p className="text-sm mt-1">Try adjusting your search or filters</p>
+          <p className="font-semibold">{t('browseListings.noListings')}</p>
+          <p className="text-sm mt-1">{t('browseListings.noListingsHint')}</p>
         </div>
       )}
     </div>

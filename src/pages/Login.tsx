@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { Sprout, Eye, EyeOff, Mail, Lock, ArrowRight, AlertCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useAuth, type Role } from '../lib/AuthContext';
 
 export default function Login() {
@@ -9,6 +10,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   const [params] = useSearchParams();
   const role = (params.get('role') || 'farmer') as Role;
@@ -20,7 +22,7 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) { setError('Please fill in all fields.'); return; }
+    if (!email || !password) { setError(t('auth.fillAllFields')); return; }
     setLoading(true);
     setError('');
     const result = await login(email, password, role);
@@ -28,7 +30,7 @@ export default function Login() {
     if (result.ok) {
       navigate(role === 'farmer' ? '/farmer/dashboard' : role === 'recruiter' ? '/recruiter/dashboard' : '/buyer/dashboard');
     } else {
-      setError(result.error || 'Invalid credentials.');
+      setError(result.error || t('auth.invalidCredentials'));
     }
   };
 
@@ -97,31 +99,31 @@ export default function Login() {
           </Link>
 
           <div className="mb-6">
-            <h1 className="text-3xl font-black text-gray-900 mb-1">Sign In</h1>
+            <h1 className="text-3xl font-black text-gray-900 mb-1">{t('auth.signIn')}</h1>
             <p className="text-gray-500 text-sm">
-              Don't have an account?{' '}
+              {t('auth.noAccount')}{' '}
               <Link to={`/signup?role=${role}`} className="text-green-600 font-semibold hover:underline">
-                Create one free
+                {t('auth.createFree')}
               </Link>
             </p>
           </div>
 
           {/* Demo quick-access */}
           <div className="border rounded-2xl p-4 mb-6" style={{ backgroundColor: '#f0f7f3', borderColor: '#aed4bc' }}>
-            <p className="text-xs font-bold mb-2" style={{ color: '#0D592A' }}>Quick Demo Access</p>
+            <p className="text-xs font-bold mb-2" style={{ color: '#0D592A' }}>{t('auth.quickDemo')}</p>
             <div className="flex gap-2 flex-wrap">
               <button onClick={() => quickLogin('farmer@demo.com', 'farmer')}
                 className="flex-1 py-2 text-white text-xs font-bold rounded-xl hover:opacity-90 transition"
                 style={{ backgroundColor: '#0D592A' }}>
-                Enter as Farmer
+                {t('auth.enterAsFarmer')}
               </button>
               <button onClick={() => quickLogin('buyer@demo.com', 'buyer')}
                 className="flex-1 py-2 bg-blue-600 text-white text-xs font-bold rounded-xl hover:bg-blue-700 transition">
-                Enter as Buyer
+                {t('auth.enterAsBuyer')}
               </button>
               <button onClick={() => quickLogin('recruiter@demo.com', 'recruiter')}
                 className="flex-1 py-2 bg-amber-600 text-white text-xs font-bold rounded-xl hover:bg-amber-700 transition">
-                Enter as Recruiter
+                {t('auth.enterAsRecruiter')}
               </button>
             </div>
           </div>
@@ -134,7 +136,7 @@ export default function Login() {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Email Address</label>
+              <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">{t('auth.email')}</label>
               <div className="relative">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input type="email" placeholder="you@example.com" value={email} onChange={e => setEmail(e.target.value)}
@@ -143,7 +145,7 @@ export default function Login() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Password</label>
+              <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">{t('auth.password')}</label>
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input type={show ? 'text' : 'password'} placeholder="••••••••" value={password} onChange={e => setPassword(e.target.value)}
@@ -155,15 +157,15 @@ export default function Login() {
             </div>
 
             <div className="flex justify-end">
-              <a href="#" className="text-sm text-green-600 hover:underline font-medium">Forgot password?</a>
+              <a href="#" className="text-sm text-green-600 hover:underline font-medium">{t('auth.forgotPassword')}</a>
             </div>
 
             <button type="submit" disabled={loading}
               className="w-full flex items-center justify-center gap-2 text-white font-bold py-3.5 rounded-2xl hover:opacity-90 transition-all shadow-lg disabled:opacity-60"
               style={{ backgroundColor: '#0D592A', boxShadow: '0 4px 16px -2px rgba(13,89,42,0.35)' }}>
               {loading
-                ? <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Signing in...</>
-                : <>Sign In <ArrowRight className="w-4 h-4" /></>}
+                ? <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> {t('auth.signingIn')}</>
+                : <>{t('auth.signIn')} <ArrowRight className="w-4 h-4" /></>}
             </button>
           </form>
 
@@ -185,9 +187,9 @@ export default function Login() {
           </div>
 
           <p className="text-center text-xs text-gray-400 mt-6">
-            Not {isFarmer ? 'a farmer' : isRecruiter ? 'a recruiter' : 'a buyer'}?{' '}
+            {isFarmer ? t('roles.farmer') : isRecruiter ? t('roles.recruiter') : t('roles.buyer')}?{' '}
             <Link to="/role-select" className="text-green-600 hover:underline font-medium">
-              Switch role
+              {t('auth.switchRole')}
             </Link>
           </p>
         </div>

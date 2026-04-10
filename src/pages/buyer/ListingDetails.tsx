@@ -6,6 +6,7 @@ import {
   Award, Leaf, Weight, Calendar, ChevronRight, X, CheckCircle,
   CreditCard, Banknote, Smartphone, Package,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { getListingById, getListings } from '../../lib/listingsData';
 import { ordersStore } from '../../lib/ordersStore';
 
@@ -15,6 +16,7 @@ export default function ListingDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const listing = getListingById(Number(id)) || getListings()[0];
+  const { t } = useTranslation();
 
   const [activeImg, setActiveImg] = useState(0);
   const [showOrder, setShowOrder] = useState(false);
@@ -52,7 +54,7 @@ export default function ListingDetails() {
   return (
     <div className="animate-fade-in max-w-5xl mx-auto">
       <Link to="/buyer/browse" className="flex items-center gap-2 text-sm text-gray-500 hover:text-green-600 transition mb-6">
-        <ArrowLeft className="w-4 h-4" /> Back to Listings
+        <ArrowLeft className="w-4 h-4" /> {t('listingDetails.backToListings')}
       </Link>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -145,7 +147,7 @@ export default function ListingDetails() {
 
       {/* Farmer card */}
       <div className="mt-8 bg-white rounded-3xl border border-gray-100 shadow-sm p-6">
-        <h3 className="font-bold text-gray-800 mb-4">About the Farmer</h3>
+        <h3 className="font-bold text-gray-800 mb-4">{t('listingDetails.aboutFarmer')}</h3>
         <div className="flex items-start gap-4">
           <img src={listing.farmerAvatar} alt={listing.farmerOwner} className="w-14 h-14 rounded-2xl object-cover shrink-0" />
           <div className="flex-1">
@@ -196,17 +198,17 @@ export default function ListingDetails() {
                   <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <CheckCircle className="w-8 h-8 text-green-600" />
                   </div>
-                  <h3 className="text-xl font-black text-gray-900 mb-2">Order Placed!</h3>
-                  <p className="text-gray-500 text-sm mb-1">Your order for <strong>{qty} {listing.unit}</strong> of <strong>{listing.name}</strong> has been placed.</p>
-                  <p className="text-gray-400 text-xs mb-6">The farmer will confirm within 24 hours.</p>
+                  <h3 className="text-xl font-black text-gray-900 mb-2">{t('listingDetails.orderPlaced')}</h3>
+                  <p className="text-gray-500 text-sm mb-1">{t('listingDetails.orderConfirm', { qty, unit: listing.unit, product: listing.name })}</p>
+                  <p className="text-gray-400 text-xs mb-6">{t('listingDetails.farmerConfirm')}</p>
                   <div className="flex gap-3">
                     <button onClick={() => { setShowOrder(false); navigate('/buyer/orders'); }}
                       className="flex-1 py-3 gradient-green text-white font-bold rounded-2xl text-sm hover:opacity-90 transition">
-                      Track Order
+                      {t('listingDetails.trackOrder')}
                     </button>
                     <button onClick={() => setShowOrder(false)}
                       className="flex-1 py-3 bg-gray-100 text-gray-600 font-bold rounded-2xl text-sm hover:bg-gray-200 transition">
-                      Continue Shopping
+                      {t('listingDetails.continueShopping')}
                     </button>
                   </div>
                 </div>

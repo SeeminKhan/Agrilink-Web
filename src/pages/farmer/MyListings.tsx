@@ -5,6 +5,7 @@ import {
   ImagePlus, CheckCircle, ChevronLeft, ChevronRight, QrCode, Download,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { farmerListingsStore, type FarmerListing } from '../../lib/farmerListingsStore';
 
 const statusColor: Record<string, string> = {
@@ -273,6 +274,7 @@ export default function MyListings() {
   const [deleting, setDeleting] = useState<FarmerListing | null>(null);
   const [gallery, setGallery]   = useState<FarmerListing | null>(null);
   const [qrItem, setQrItem]     = useState<FarmerListing | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => farmerListingsStore.subscribe(() => setListings(farmerListingsStore.getAll())), []);
 
@@ -289,13 +291,13 @@ export default function MyListings() {
     <div className="animate-fade-in">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl font-black text-gray-900">My Listings</h1>
-          <p className="text-gray-500 text-sm mt-0.5">{listings.length} total listings</p>
+          <h1 className="text-2xl font-black text-gray-900">{t('myListings.title')}</h1>
+          <p className="text-gray-500 text-sm mt-0.5">{t('myListings.totalListings', { count: listings.length })}</p>
         </div>
         <Link to="/farmer/add-listing"
           className="flex items-center gap-2 text-white font-bold px-5 py-2.5 rounded-2xl hover:opacity-90 transition shadow-lg text-sm w-fit"
           style={{ backgroundColor: '#0D592A' }}>
-          <Plus className="w-4 h-4" /> Add Listing
+          <Plus className="w-4 h-4" /> {t('myListings.addListing')}
         </Link>
       </div>
 
@@ -303,7 +305,7 @@ export default function MyListings() {
       <div className="flex flex-col sm:flex-row gap-3 mb-6">
         <div className="relative flex-1 max-w-xs">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-          <input type="text" placeholder="Search listings..." value={search} onChange={e => setSearch(e.target.value)}
+          <input type="text" placeholder={t('myListings.searchPlaceholder')} value={search} onChange={e => setSearch(e.target.value)}
             className="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-green-300 transition" />
         </div>
         <div className="flex gap-2 flex-wrap">
@@ -386,8 +388,8 @@ export default function MyListings() {
 
       {filtered.length === 0 && (
         <div className="text-center py-20 text-gray-400">
-          <p className="text-lg font-semibold">No listings found</p>
-          <p className="text-sm mt-1">Try adjusting your filters or add a new listing</p>
+          <p className="text-lg font-semibold">{t('myListings.noListings')}</p>
+          <p className="text-sm mt-1">{t('myListings.noListingsHint')}</p>
         </div>
       )}
 

@@ -1,11 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-
-const stats = [
-  { value: 50000, suffix: '+', label: 'Registered Farmers', color: '#0D592A' },
-  { value: 120000, suffix: '+', label: 'Products Listed', color: '#1d4ed8' },
-  { value: 35, suffix: '+', label: 'Countries Reached', color: '#c2410c' },
-  { value: 2, suffix: 'M+', label: 'USD in Transactions', color: '#7c3aed' },
-];
+import { useTranslation } from 'react-i18next';
 
 function useCountUp(target: number, duration = 2000, active: boolean) {
   const [count, setCount] = useState(0);
@@ -23,7 +17,7 @@ function useCountUp(target: number, duration = 2000, active: boolean) {
   return count;
 }
 
-function StatItem({ value, suffix, label, color }: typeof stats[0]) {
+function StatItem({ value, suffix, label, color }: { value: number; suffix: string; label: string; color: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
   const count = useCountUp(value, 2000, active);
@@ -45,6 +39,15 @@ function StatItem({ value, suffix, label, color }: typeof stats[0]) {
 }
 
 export default function Stats() {
+  const { t } = useTranslation();
+
+  const stats = [
+    { value: 50000, suffix: '+', label: t('stats.farmers'), color: '#0D592A' },
+    { value: 120000, suffix: '+', label: t('stats.products'), color: '#1d4ed8' },
+    { value: 35, suffix: '+', label: t('stats.countries'), color: '#c2410c' },
+    { value: 2, suffix: 'M+', label: t('stats.transactions'), color: '#7c3aed' },
+  ];
+
   return (
     <section className="py-16 bg-white border-y border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

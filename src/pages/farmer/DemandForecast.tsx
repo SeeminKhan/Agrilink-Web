@@ -4,6 +4,7 @@ import {
   BarChart2, TrendingUp, TrendingDown, Minus,
   ChevronRight, Info, AlertCircle,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { forecastDemand, type ForecastResult } from '../../lib/priceService';
 
 const POPULAR_CROPS = [
@@ -27,6 +28,7 @@ export default function DemandForecast() {
   const [loading, setLoading] = useState(false);
   const [result, setResult]   = useState<ForecastResult | null>(null);
   const [error, setError]     = useState('');
+  const { t } = useTranslation();
 
   const handleSubmit = async () => {
     if (!crop.trim()) return;
@@ -52,10 +54,10 @@ export default function DemandForecast() {
           <div className="w-8 h-8 bg-emerald-100 rounded-xl flex items-center justify-center">
             <BarChart2 className="w-4 h-4 text-emerald-600" />
           </div>
-          <h1 className="text-2xl font-black text-gray-900">Demand Forecasting</h1>
+          <h1 className="text-2xl font-black text-gray-900">{t('demandForecast.title')}</h1>
         </div>
         <p className="text-gray-500 text-sm">
-          Predict mandi demand for your crop using Holt-Winters time-series analysis.
+          {t('demandForecast.subtitle')}
         </p>
       </div>
 

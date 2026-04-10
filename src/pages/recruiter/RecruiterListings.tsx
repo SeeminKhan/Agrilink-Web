@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Briefcase, MapPin, Users, Edit2, Trash2, Eye, Plus } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { jobsStore, type Job } from '../../lib/jobsStore';
 import { staggerContainer, slideUp } from '../../lib/motion';
 
@@ -15,6 +16,7 @@ export default function RecruiterListings() {
   const [jobs, setJobs] = useState(jobsStore.getAll());
   const [filter, setFilter] = useState<'All' | Job['status']>('All');
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => jobsStore.subscribe(() => setJobs(jobsStore.getAll())), []);
 
@@ -33,13 +35,13 @@ export default function RecruiterListings() {
     <div className="animate-fade-in">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl font-black text-gray-900">My Job Listings</h1>
-          <p className="text-sm text-gray-500 mt-0.5">{jobs.length} job{jobs.length !== 1 ? 's' : ''} posted</p>
+          <h1 className="text-2xl font-black text-gray-900">{t('recruiterListings.title')}</h1>
+          <p className="text-sm text-gray-500 mt-0.5">{jobs.length !== 1 ? t('recruiterListings.jobsPostedPlural', { count: jobs.length }) : t('recruiterListings.jobsPosted', { count: jobs.length })}</p>
         </div>
         <Link to="/recruiter/post-job"
           className="flex items-center gap-2 text-white font-bold px-5 py-2.5 rounded-2xl hover:opacity-90 transition text-sm w-fit"
           style={{ backgroundColor: '#d97706' }}>
-          <Plus className="w-4 h-4" /> Post Job
+          <Plus className="w-4 h-4" /> {t('recruiterListings.postJob')}
         </Link>
       </div>
 
@@ -57,8 +59,8 @@ export default function RecruiterListings() {
       {filtered.length === 0 ? (
         <div className="text-center py-20 text-gray-400">
           <Briefcase className="w-10 h-10 mx-auto mb-3 opacity-30" />
-          <p className="font-semibold">No jobs here yet</p>
-          <Link to="/recruiter/post-job" className="text-sm text-amber-600 hover:underline mt-1 inline-block">Post your first job</Link>
+          <p className="font-semibold">{t('recruiterListings.noJobs')}</p>
+          <Link to="/recruiter/post-job" className="text-sm text-amber-600 hover:underline mt-1 inline-block">{t('recruiterListings.postFirst')}</Link>
         </div>
       ) : (
         <motion.div variants={staggerContainer} initial="hidden" animate="show" className="space-y-3">

@@ -4,6 +4,7 @@ import {
   Users, MapPin, ChevronRight, AlertCircle,
   Phone, MessageCircle, Star, TrendingUp, Package,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { matchBuyers, MH_MARKETS, type BuyerMatch } from '../../lib/priceService';
 import { farmerListingsStore } from '../../lib/farmerListingsStore';
 
@@ -36,6 +37,7 @@ function scoreColor(s: number) {
 export default function BuyerMatching() {
   // Pre-fill from first active listing if available
   const activeListing = farmerListingsStore.getAll().find(l => l.status === 'Active');
+  const { t } = useTranslation();
 
   const [form, setForm] = useState({
     crop:     activeListing?.name || '',
@@ -81,9 +83,9 @@ export default function BuyerMatching() {
           <div className="w-8 h-8 bg-blue-100 rounded-xl flex items-center justify-center">
             <Users className="w-4 h-4 text-blue-600" />
           </div>
-          <h1 className="text-2xl font-black text-gray-900">Best Buyer Matches</h1>
+          <h1 className="text-2xl font-black text-gray-900">{t('buyerMatching.title')}</h1>
         </div>
-        <p className="text-gray-500 text-sm">Find the best buyers for your crop based on distance, price offered, and demand.</p>
+        <p className="text-gray-500 text-sm">{t('buyerMatching.subtitle')}</p>
       </div>
 
       {/* Input card */}

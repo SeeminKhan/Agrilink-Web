@@ -5,6 +5,7 @@ import {
   Briefcase, MapPin, Clock, Banknote, Tag, FileText,
   Image, ChevronRight, ChevronLeft, CheckCircle, Upload,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { jobsStore, type Job } from '../../lib/jobsStore';
 import { slideUp } from '../../lib/motion';
 
@@ -24,6 +25,7 @@ export default function PostJob() {
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [done, setDone] = useState(false);
+  const { t } = useTranslation();
 
   const [form, setForm] = useState({
     title: '', company: '', location: '', type: 'Full-time' as Job['type'],
@@ -62,17 +64,17 @@ export default function PostJob() {
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
             <CheckCircle className="w-10 h-10 text-green-600" />
           </div>
-          <h2 className="text-2xl font-black text-gray-900 mb-2">Job Posted!</h2>
-          <p className="text-gray-500 text-sm mb-6">Your job is now live and visible to farmers in the Jobs section.</p>
+          <h2 className="text-2xl font-black text-gray-900 mb-2">{t('postJob.jobPosted')}</h2>
+          <p className="text-gray-500 text-sm mb-6">{t('postJob.jobLive')}</p>
           <div className="flex gap-3 justify-center">
             <button onClick={() => navigate('/recruiter/listings')}
               className="px-6 py-3 rounded-2xl text-white font-bold text-sm hover:opacity-90 transition"
               style={{ backgroundColor: '#d97706' }}>
-              View My Listings
+              {t('postJob.viewListings')}
             </button>
             <button onClick={() => { setDone(false); setStep(0); setForm({ title: '', company: '', location: '', type: 'Full-time', duration: '', wage: '', cropType: '', skill: 'Beginner', tags: '', desc: '', responsibilities: '', skills: '', contact: '', img: JOB_IMAGES[0] }); }}
               className="px-6 py-3 rounded-2xl border border-gray-200 font-bold text-sm text-gray-600 hover:bg-gray-50 transition">
-              Post Another
+              {t('postJob.postAnother')}
             </button>
           </div>
         </motion.div>
@@ -83,8 +85,8 @@ export default function PostJob() {
   return (
     <div className="max-w-2xl mx-auto animate-fade-in">
       <div className="mb-6">
-        <h1 className="text-2xl font-black text-gray-900">Post a Job</h1>
-        <p className="text-sm text-gray-500 mt-0.5">Fill in the details to attract the right candidates</p>
+        <h1 className="text-2xl font-black text-gray-900">{t('postJob.title')}</h1>
+        <p className="text-sm text-gray-500 mt-0.5">{t('postJob.subtitle')}</p>
       </div>
 
       {/* Step indicator */}

@@ -1,39 +1,41 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 import { ArrowRight, Sprout, ShoppingBag, Briefcase, CheckCircle2 } from 'lucide-react';
-
-const roles = [
-  {
-    id: 'farmer', icon: Sprout, title: "I'm a Farmer", subtitle: 'Sell your produce directly',
-    description: 'List your crops, get AI-powered price suggestions, access training resources, and connect directly with verified buyers.',
-    image: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=600&q=80',
-    perks: ['List unlimited crops', 'AI price suggestions', 'Direct buyer connections', 'Free job training'],
-    gradientFrom: '#0D592A', gradientTo: '#0a4721',
-    borderColor: '#0D592A', bgColor: '#f0f7f3', badgeColor: '#0D592A', badgeBg: '#d6eade',
-  },
-  {
-    id: 'buyer', icon: ShoppingBag, title: "I'm a Buyer", subtitle: 'Source fresh produce directly',
-    description: 'Browse verified crop listings, filter by quality grade, verify authenticity, and connect directly with farmers near you.',
-    image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&q=80',
-    perks: ['Browse 120K+ listings', 'Quality verification', 'Direct farmer contact', 'Price comparison'],
-    gradientFrom: '#1d4ed8', gradientTo: '#1e40af',
-    borderColor: '#1d4ed8', bgColor: '#eff6ff', badgeColor: '#1d4ed8', badgeBg: '#dbeafe',
-  },
-  {
-    id: 'recruiter', icon: Briefcase, title: "I'm a Recruiter", subtitle: 'Hire skilled farm labor',
-    description: 'Post agricultural jobs, manage applicants, and hire skilled farmers and laborers for your farm or agri-business.',
-    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80',
-    perks: ['Post unlimited jobs', 'Manage applicants', 'Hire verified farmers', 'Analytics dashboard'],
-    gradientFrom: '#92400e', gradientTo: '#78350f',
-    borderColor: '#d97706', bgColor: '#fffbeb', badgeColor: '#92400e', badgeBg: '#fde68a',
-  },
-];
+import { useTranslation } from 'react-i18next';
 
 export default function RoleSelect() {
   const [selected, setSelected] = useState<string | null>(null);
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const intent = params.get('intent');
+  const { t } = useTranslation();
+
+  const roles = [
+    {
+      id: 'farmer', icon: Sprout, title: t('roleSelect.farmer.title'), subtitle: t('roleSelect.farmer.subtitle'),
+      description: t('roleSelect.farmer.description'),
+      image: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=600&q=80',
+      perks: ['List unlimited crops', 'AI price suggestions', 'Direct buyer connections', 'Free job training'],
+      gradientFrom: '#0D592A', gradientTo: '#0a4721',
+      borderColor: '#0D592A', bgColor: '#f0f7f3', badgeColor: '#0D592A', badgeBg: '#d6eade',
+    },
+    {
+      id: 'buyer', icon: ShoppingBag, title: t('roleSelect.buyer.title'), subtitle: t('roleSelect.buyer.subtitle'),
+      description: t('roleSelect.buyer.description'),
+      image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&q=80',
+      perks: ['Browse 120K+ listings', 'Quality verification', 'Direct farmer contact', 'Price comparison'],
+      gradientFrom: '#1d4ed8', gradientTo: '#1e40af',
+      borderColor: '#1d4ed8', bgColor: '#eff6ff', badgeColor: '#1d4ed8', badgeBg: '#dbeafe',
+    },
+    {
+      id: 'recruiter', icon: Briefcase, title: t('roleSelect.recruiter.title'), subtitle: t('roleSelect.recruiter.subtitle'),
+      description: t('roleSelect.recruiter.description'),
+      image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80',
+      perks: ['Post unlimited jobs', 'Manage applicants', 'Hire verified farmers', 'Analytics dashboard'],
+      gradientFrom: '#92400e', gradientTo: '#78350f',
+      borderColor: '#d97706', bgColor: '#fffbeb', badgeColor: '#92400e', badgeBg: '#fde68a',
+    },
+  ];
 
   const handleContinue = () => {
     if (!selected) return;
@@ -49,8 +51,8 @@ export default function RoleSelect() {
           </div>
           <span className="font-black text-xl" style={{ color: '#0D592A' }}>AgriLink</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">How will you use AgriLink?</h1>
-        <p className="text-gray-500 max-w-md mx-auto">Choose your role to get a personalized experience tailored to your needs.</p>
+        <h1 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">{t('roleSelect.title')}</h1>
+        <p className="text-gray-500 max-w-md mx-auto">{t('roleSelect.subtitle')}</p>
       </div>
 
       <div className="flex-1 flex items-start justify-center px-4 pb-32">
@@ -102,14 +104,14 @@ export default function RoleSelect() {
       <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur border-t border-gray-100 px-4 py-4 z-50">
         <div className="max-w-3xl mx-auto flex items-center justify-between gap-4">
           <p className="text-sm text-gray-500">
-            {selected ? `Selected: ${roles.find(r => r.id === selected)?.title}` : 'Select a role to continue'}
+            {selected ? `${t('roleSelect.selected')}: ${roles.find(r => r.id === selected)?.title}` : t('roleSelect.selectRole')}
           </p>
           <button onClick={handleContinue} disabled={!selected}
             className="flex items-center gap-2 font-bold px-8 py-3 rounded-2xl transition-all text-white"
             style={selected
               ? { backgroundColor: '#0D592A', boxShadow: '0 4px 16px -2px rgba(13,89,42,0.35)' }
               : { backgroundColor: '#e5e7eb', color: '#9ca3af', cursor: 'not-allowed' }}>
-            Continue <ArrowRight className="w-4 h-4" />
+            {t('roleSelect.continue')} <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </div>

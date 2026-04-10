@@ -60,14 +60,14 @@ export default function Navbar() {
               <button onClick={() => setLangOpen(o => !o)}
                 className={`flex items-center gap-1.5 text-sm font-medium px-3 py-2 rounded-lg transition ${scrolled ? 'hover:bg-gray-100 text-gray-600' : 'text-white/80 hover:bg-white/10'}`}>
                 <Globe className="w-4 h-4" />
-                <span>{currentLang.flag} {currentLang.code.toUpperCase()}</span>
+                <span>{currentLang.code.toUpperCase()}</span>
               </button>
               {langOpen && (
                 <div className="absolute right-0 top-full mt-1 bg-white rounded-2xl shadow-xl border border-gray-100 py-1 z-50 min-w-[140px]">
                   {LANG_OPTIONS.map(l => (
                     <button key={l.code} onClick={() => { setLanguage(l.code as SupportedLang); setLangOpen(false); }}
                       className={`w-full flex items-center gap-2.5 px-4 py-2.5 text-sm hover:bg-gray-50 transition ${i18n.language === l.code ? 'font-bold text-green-700' : 'text-gray-700'}`}>
-                      <span>{l.flag}</span> {l.native}
+                      {l.native}
                     </button>
                   ))}
                 </div>
@@ -109,10 +109,10 @@ export default function Navbar() {
       {open && (
         <div className="md:hidden bg-white shadow-lg px-4 pb-4 pt-2">
           {navLinks.map(link => (
-            <Link key={link.label} to={link.to} onClick={() => setOpen(false)}
+            <Link key={link.to} to={link.to} onClick={() => setOpen(false)}
               className="block py-2 text-gray-700 font-medium text-sm hover:opacity-80 transition"
               style={location.pathname === link.to ? { color: '#0D592A' } : {}}>
-              {link.label}
+              {t(link.labelKey)}
             </Link>
           ))}
           <div className="flex gap-3 mt-3">

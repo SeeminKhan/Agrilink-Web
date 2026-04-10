@@ -1,24 +1,25 @@
 import { UserPlus, Store, ShoppingCart, PackageCheck } from 'lucide-react';
-
-const steps = [
-  { icon: UserPlus, step: '01', title: 'Create Your Account', desc: 'Sign up as a farmer or buyer in minutes. Verify your profile to build trust.', bg: '#0D592A' },
-  { icon: Store, step: '02', title: 'List or Browse Products', desc: 'Farmers list their produce with photos and prices. Buyers browse by category or location.', bg: '#a16207' },
-  { icon: ShoppingCart, step: '03', title: 'Place Your Order', desc: 'Add items to cart, negotiate if needed, and pay securely through our platform.', bg: '#1d4ed8' },
-  { icon: PackageCheck, step: '04', title: 'Receive & Review', desc: 'Get your order delivered or arrange pickup. Leave a review to help the community.', bg: '#7c3aed' },
-];
+import { useTranslation } from 'react-i18next';
 
 export default function HowItWorks() {
+  const { t } = useTranslation();
+
+  const steps = [
+    { icon: UserPlus, step: '01', title: t('howItWorks.step1Title'), desc: t('howItWorks.step1Desc'), bg: '#0D592A' },
+    { icon: Store, step: '02', title: t('howItWorks.step2Title'), desc: t('howItWorks.step2Desc'), bg: '#a16207' },
+    { icon: ShoppingCart, step: '03', title: t('howItWorks.step3Title'), desc: t('howItWorks.step3Desc'), bg: '#1d4ed8' },
+    { icon: PackageCheck, step: '04', title: t('howItWorks.step4Title'), desc: t('howItWorks.step4Desc'), bg: '#7c3aed' },
+  ];
+
   return (
     <section id="how-it-works" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
-          <span className="font-semibold text-sm uppercase tracking-widest" style={{ color: '#0D592A' }}>Simple Process</span>
+          <span className="font-semibold text-sm uppercase tracking-widest" style={{ color: '#0D592A' }}>{t('howItWorks.badge')}</span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-2">
-            How <span style={{ color: '#0D592A' }}>AgriLink</span> Works
+            {t('howItWorks.title')} <span style={{ color: '#0D592A' }}>{t('howItWorks.titleHighlight')}</span> {t('howItWorks.titleEnd')}
           </h2>
-          <p className="text-gray-500 mt-3 max-w-xl mx-auto">
-            Get started in four easy steps and start trading agricultural products today.
-          </p>
+          <p className="text-gray-500 mt-3 max-w-xl mx-auto">{t('howItWorks.subtitle')}</p>
         </div>
 
         <div className="relative">
@@ -42,7 +43,7 @@ export default function HowItWorks() {
         <div className="text-center mt-14">
           <a href="/signup" className="inline-flex items-center gap-2 text-white font-semibold px-8 py-3 rounded-xl transition shadow-lg"
             style={{ backgroundColor: '#0D592A', boxShadow: '0 4px 16px -2px rgba(13,89,42,0.35)' }}>
-            Start Trading Today
+            {t('howItWorks.startTrading')}
           </a>
         </div>
       </div>

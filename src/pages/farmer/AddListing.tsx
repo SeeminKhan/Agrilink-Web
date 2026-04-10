@@ -6,6 +6,7 @@ import {
   ChevronRight, CheckCircle2, Sparkles, X, Calendar,
   Mic, MicOff, CloudRain, Truck,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { farmerListingsStore } from '../../lib/farmerListingsStore';
 import { predictPrice, MH_MARKETS } from '../../lib/priceService';
 
@@ -27,9 +28,21 @@ function parseVoice(text: string): Partial<Record<string, string>> {
   const t = text.toLowerCase();
   const result: Partial<Record<string, string>> = {};
 
-  // Crop name — first noun-like word before quantity keywords
-  const cropMatch = t.match(/(?:selling|listing|have|got|crop is|crop:)?\s*([a-z]+(?:\s[a-z]+)?)\s*(?:crop|produce)?/);
-  if (cropMatch) result.crop = cropMatch[1].trim().replace(/\b\w/g, c => c.toUpperCase());
+  // Crop name — word(s) after trigger keywords, or first meaningful word
+  const cropMatch = t.match(/(?:selling|listing|have|got|crop(?:\s+is)?|crop:)\s+([a-z]+(?:\s+[a-z]+)?)/);
+  if (cropMatch) {
+    result.crop = cropMatch[1].trim().replace(/\b\w/g, c => c.toUpperCase());
+  } else {
+    // fallback: first word that isn't a filler
+    const firstWord = t.match(/^([a-z]+)/);
+    if (firstWord && !['i', 'my', 'the', 'a', 'an', 'selling', 'have'].includes(firstWord[1])) {
+      result.crop = firstWord[1].replace(/\b\w/g, c => c.toUpperCase());
+    }
+  }
+
+  // Variety — after "variety" or "type" keyword
+  const varietyMatch = t.match(/(?:variety|type|किस्म|वाण)\s+(?:is\s+)?([a-z]+(?:\s+[a-z]+)?)/);
+  if (varietyMatch) result.variety = varietyMatch[1].trim().replace(/\b\w/g, c => c.toUpperCase());
 
   // Quantity — number followed by unit
   const qtyMatch = t.match(/(\d+(?:\.\d+)?)\s*(kg|quintal|quintals|tonne|tonnes|bags?|crates?|pieces?)/);
@@ -39,21 +52,59 @@ function parseVoice(text: string): Partial<Record<string, string>> {
   if (t.includes('grade a') || t.includes('a grade')) result.grade = 'Grade A';
   else if (t.includes('grade b') || t.includes('b grade')) result.grade = 'Grade B';
   else if (t.includes('grade c') || t.includes('c grade')) result.grade = 'Grade C';
-  else if (t.includes('organic')) result.grade = 'Organic';
+  else if (t.includes('organic') || t.includes('jaivik') || t.includes('सेंद्रिय')) result.grade = 'Organic';
 
   // Price
-  const priceMatch = t.match(/(?:price|rate|₹|rs\.?|rupees?)\s*(\d+(?:\.\d+)?)/);
+  const priceMatch = t.match(/(?:price|rate|₹|rs\.?|rupees?|रुपए|रुपये)\s*(\d+(?:\.\d+)?)/);
   if (priceMatch) result.price = priceMatch[1];
 
-  // Location — Maharashtra cities
-  const cities = ['nashik', 'pune', 'nagpur', 'aurangabad', 'solapur', 'kolhapur', 'satara', 'sangli', 'ahmednagar', 'jalgaon', 'latur', 'nanded'];
-  const city = cities.find(c => t.includes(c));
-  if (city) result.location = `${city.charAt(0).toUpperCase() + city.slice(1)}, Maharashtra`;
+  // Location — Maharashtra cities (also handle common mispronunciations / Hindi names)
+  const cityMap: Record<string, string> = {
+    nashik: 'Nashik, Maharashtra', nasik: 'Nashik, Maharashtra',
+    pune: 'Pune, Maharashtra', poona: 'Pune, Maharashtra',
+    nagpur: 'Nagpur, Maharashtra',
+    aurangabad: 'Aurangabad, Maharashtra', aurangabaad: 'Aurangabad, Maharashtra',
+    solapur: 'Solapur, Maharashtra', sholapur: 'Solapur, Maharashtra',
+    kolhapur: 'Kolhapur, Maharashtra',
+    satara: 'Satara, Maharashtra',
+    sangli: 'Sangli, Maharashtra',
+    ahmednagar: 'Ahmednagar, Maharashtra', ahmadnagar: 'Ahmednagar, Maharashtra',
+    jalgaon: 'Jalgaon, Maharashtra',
+    latur: 'Latur, Maharashtra',
+    nanded: 'Nanded, Maharashtra',
+    mumbai: 'Mumbai, Maharashtra', bombay: 'Mumbai, Maharashtra',
+  };
+  const matchedCity = Object.keys(cityMap).find(k => t.includes(k));
+  if (matchedCity) result.location = cityMap[matchedCity];
+
+  // Harvest date — "harvested on <date>", "harvest date <date>", or just a date pattern
+  const datePatterns = [
+    /(?:harvest(?:ed)?(?:\s+(?:on|date))?|कटाई)\s+(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})/,
+    /(?:harvest(?:ed)?(?:\s+(?:on|date))?|कटाई)\s+(\d{1,2}\s+(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\w*\s+\d{2,4})/i,
+    /(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})/,
+  ];
+  for (const pat of datePatterns) {
+    const m = t.match(pat);
+    if (m) {
+      // Convert to YYYY-MM-DD for the date input
+      const raw = m[1].trim();
+      const parts = raw.split(/[\/\-\s]+/);
+      if (parts.length === 3) {
+        const [d, mo, y] = parts;
+        const year = y.length === 2 ? `20${y}` : y;
+        const month = isNaN(Number(mo))
+          ? String(['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'].indexOf(mo.toLowerCase().slice(0,3)) + 1).padStart(2, '0')
+          : String(Number(mo)).padStart(2, '0');
+        result.harvestDate = `${year}-${month}-${String(Number(d)).padStart(2, '0')}`;
+      }
+      break;
+    }
+  }
 
   // Season
-  if (t.includes('kharif')) result.season = 'kharif';
-  else if (t.includes('rabi')) result.season = 'rabi';
-  else if (t.includes('zaid')) result.season = 'zaid';
+  if (t.includes('kharif') || t.includes('खरीफ')) result.season = 'kharif';
+  else if (t.includes('rabi') || t.includes('रबी')) result.season = 'rabi';
+  else if (t.includes('zaid') || t.includes('जायद')) result.season = 'zaid';
 
   return result;
 }
@@ -61,6 +112,7 @@ function parseVoice(text: string): Partial<Record<string, string>> {
 export default function AddListing() {
   const navigate = useNavigate();
   const fileRef  = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation();
 
   const [step, setStep]     = useState(0);
   const [done, setDone]     = useState(false);
@@ -180,17 +232,17 @@ export default function AddListing() {
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
             <CheckCircle2 className="w-10 h-10 text-green-600" />
           </div>
-          <h2 className="text-2xl font-black text-gray-900 mb-2">Listing Published!</h2>
-          <p className="text-gray-500 text-sm mb-6">Your crop is now live and visible to buyers across Maharashtra.</p>
+          <h2 className="text-2xl font-black text-gray-900 mb-2">{t('addListing.listingPublished')}</h2>
+          <p className="text-gray-500 text-sm mb-6">{t('addListing.listingLive')}</p>
           <div className="flex gap-3 justify-center">
             <button onClick={() => navigate('/farmer/listings')}
               className="px-6 py-3 rounded-2xl text-white font-bold text-sm hover:opacity-90 transition"
               style={{ backgroundColor: BRAND }}>
-              View My Listings
+              {t('addListing.viewMyListings')}
             </button>
-            <button onClick={() => { setDone(false); setStep(0); setImages([]); setForm({ crop: '', variety: '', grade: '', quantity: '', unit: 'kg', location: '', price: '', description: '', harvestDate: '' }); }}
+            <button onClick={() => { setDone(false); setStep(0); setImages([]); setForm({ crop: '', variety: '', grade: '', quantity: '', unit: 'kg', location: '', price: '', description: '', harvestDate: '', market: 'Nashik', season: 'kharif', rainfall_mm: '80', days_to_market: '1' }); }}
               className="px-6 py-3 rounded-2xl border border-gray-200 font-bold text-sm text-gray-600 hover:bg-gray-50 transition">
-              Add Another
+              {t('addListing.addAnother')}
             </button>
           </div>
         </motion.div>
@@ -202,8 +254,8 @@ export default function AddListing() {
     <div className="max-w-2xl mx-auto animate-fade-in">
       <div className="mb-6 flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-gray-900">Add New Listing</h1>
-          <p className="text-gray-500 text-sm mt-1">List your crop for buyers to discover and purchase directly.</p>
+          <h1 className="text-2xl font-black text-gray-900">{t('addListing.title')}</h1>
+          <p className="text-gray-500 text-sm mt-1">{t('addListing.subtitle')}</p>
         </div>
         {/* Voice button */}
         <div className="shrink-0">

@@ -4,6 +4,7 @@ import {
   Package, Clock, CheckCircle2, XCircle, ChevronRight, MapPin,
   X, Phone, MessageCircle, Navigation, Truck,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { ordersStore, type Order } from '../../lib/ordersStore';
 
 const statusConfig: Record<string, { color: string; icon: React.ElementType; bg: string }> = {
@@ -103,6 +104,7 @@ export default function Orders() {
   const [orders, setOrders] = useState(ordersStore.getAll());
   const [selected, setSelected] = useState<Order | null>(null);
   const [filter, setFilter] = useState<'All' | Order['status']>('All');
+  const { t } = useTranslation();
 
   useEffect(() => ordersStore.subscribe(() => setOrders(ordersStore.getAll())), []);
 
@@ -119,17 +121,17 @@ export default function Orders() {
   return (
     <div className="animate-fade-in">
       <div className="mb-6">
-        <h1 className="text-2xl font-black text-gray-900">My Orders</h1>
-        <p className="text-gray-500 text-sm mt-0.5">{orders.length} total orders</p>
+        <h1 className="text-2xl font-black text-gray-900">{t('orders.title')}</h1>
+        <p className="text-gray-500 text-sm mt-0.5">{t('orders.totalOrders', { count: orders.length })}</p>
       </div>
 
       {/* Summary cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
         {[
-          { label: 'Total Orders', value: counts.All, color: 'bg-gray-50 text-gray-700' },
-          { label: 'Delivered', value: counts.Delivered, color: 'bg-green-50 text-green-700' },
-          { label: 'In Transit', value: counts['In Transit'], color: 'bg-blue-50 text-blue-700' },
-          { label: 'Pending', value: counts.Pending, color: 'bg-yellow-50 text-yellow-700' },
+          { label: t('orders.totalOrdersLabel'), value: counts.All, color: 'bg-gray-50 text-gray-700' },
+          { label: t('orders.delivered'), value: counts.Delivered, color: 'bg-green-50 text-green-700' },
+          { label: t('orders.inTransit'), value: counts['In Transit'], color: 'bg-blue-50 text-blue-700' },
+          { label: t('orders.pending'), value: counts.Pending, color: 'bg-yellow-50 text-yellow-700' },
         ].map(s => (
           <div key={s.label} className={`${s.color} rounded-2xl p-4 text-center`}>
             <p className="text-2xl font-black">{s.value}</p>
@@ -154,7 +156,7 @@ export default function Orders() {
         {filtered.length === 0 ? (
           <div className="text-center py-16 text-gray-400">
             <Package className="w-10 h-10 mx-auto mb-3 opacity-30" />
-            <p className="font-semibold">No orders here</p>
+            <p className="font-semibold">{t('orders.noOrders')}</p>
           </div>
         ) : (
           <div className="divide-y divide-gray-50">
