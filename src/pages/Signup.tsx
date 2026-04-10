@@ -10,21 +10,34 @@ export default function Signup() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [location, setLocation] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const { signup } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!firstName || !email) { setError('Please fill in required fields.'); return; }
+    if (!firstName || !email || !password) { setError('Please fill in required fields.'); return; }
+    if (password.length < 6) { setError('Password must be at least 6 characters.'); return; }
     setLoading(true);
     setError('');
-    setTimeout(() => {
-      signup(`${firstName} ${lastName}`.trim(), email, role);
+    const result = await signup(
+      `${firstName} ${lastName}`.trim(),
+      email,
+      password,
+      role,
+      { phone, location }
+    );
+    setLoading(false);
+    if (result.ok) {
       navigate(role === 'farmer' ? '/farmer/dashboard' : role === 'recruiter' ? '/recruiter/dashboard' : '/buyer/dashboard');
-    }, 900);
+    } else {
+      setError(result.error || 'Registration failed.');
+    }
   };
 
   const inputClass = 'w-full pl-11 pr-4 py-3.5 bg-white border border-gray-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all shadow-sm';
@@ -120,7 +133,7 @@ export default function Signup() {
               <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Phone Number</label>
               <div className="relative">
                 <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input type="tel" placeholder="+254 700 000 000" className={inputClass} />
+                <input type="tel" placeholder="+254 700 000 000" value={phone} onChange={e => setPhone(e.target.value)} className={inputClass} />
               </div>
             </div>
 
@@ -128,15 +141,16 @@ export default function Signup() {
               <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Location <span className="text-gray-300 normal-case font-normal">(optional)</span></label>
               <div className="relative">
                 <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input type="text" placeholder="City, Country" className={inputClass} />
+                <input type="text" placeholder="City, Country" value={location} onChange={e => setLocation(e.target.value)} className={inputClass} />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Password</label>
+              <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Password *</label>
               <div className="relative">
                 <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input type={show ? 'text' : 'password'} placeholder="Min. 8 characters"
+                <input type={show ? 'text' : 'password'} placeholder="Min. 6 characters"
+                  value={password} onChange={e => setPassword(e.target.value)}
                   className="w-full pl-11 pr-12 py-3.5 bg-white border border-gray-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-green-400 transition-all shadow-sm" />
                 <button type="button" onClick={() => setShow(!show)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition">
                   {show ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}

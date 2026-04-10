@@ -10,7 +10,7 @@ export const IMAGES = {
   produce4: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&q=80',
   produce5: 'https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=500&q=80',
   produce6: 'https://images.unsplash.com/photo-1553279768-865429fa0078?w=500&q=80',
-  produce7: 'https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=500&q=80',
+  produce7: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&q=80',
   produce8: 'https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=500&q=80',
   training1: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=500&q=80',
   training2: 'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=500&q=80',

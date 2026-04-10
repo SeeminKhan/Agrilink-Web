@@ -1,30 +1,25 @@
-import { useState } from 'react';
-import { Search, SlidersHorizontal, MapPin, Star, ShieldCheck, MessageCircle, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Search, SlidersHorizontal, MapPin, Star, ShieldCheck, MessageCircle, Phone, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-const listings = [
-  { id: 1, name: 'Organic Tomatoes', variety: 'Roma', grade: 'Grade A', price: '$2.50', unit: 'kg', qty: '500 kg', farmer: 'Green Valley Farm', location: 'Nairobi, Kenya', rating: 4.8, reviews: 124, img: 'https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=400&q=80', verified: true, fresh: 'Harvested 2 days ago' },
-  { id: 2, name: 'Fresh Maize', variety: 'Hybrid', grade: 'Grade B', price: '$0.80', unit: 'kg', qty: '1,200 kg', farmer: 'Sunrise Farms', location: 'Kampala, Uganda', rating: 4.6, reviews: 89, img: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=400&q=80', verified: true, fresh: 'Harvested 3 days ago' },
-  { id: 3, name: 'Premium Avocados', variety: 'Hass', grade: 'Grade A', price: '$3.20', unit: 'kg', qty: '300 kg', farmer: 'Hillside Orchards', location: 'Meru, Kenya', rating: 4.9, reviews: 210, img: 'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=400&q=80', verified: true, fresh: 'Harvested today' },
-  { id: 4, name: 'Brown Eggs', variety: 'Free Range', grade: 'Organic', price: '$4.00', unit: 'tray', qty: '200 trays', farmer: 'Happy Hens Farm', location: 'Accra, Ghana', rating: 4.7, reviews: 67, img: 'https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400&q=80', verified: false, fresh: 'Collected yesterday' },
-  { id: 5, name: 'Sweet Potatoes', variety: 'Orange', grade: 'Grade B', price: '$1.20', unit: 'kg', qty: '800 kg', farmer: 'Root & Soil Co.', location: 'Lagos, Nigeria', rating: 4.5, reviews: 43, img: 'https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=400&q=80', verified: true, fresh: 'Harvested 4 days ago' },
-  { id: 6, name: 'Raw Honey', variety: 'Wildflower', grade: 'Organic', price: '$8.00', unit: '500g', qty: '200 jars', farmer: 'Bee Natural', location: 'Addis Ababa, Ethiopia', rating: 5.0, reviews: 156, img: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400&q=80', verified: true, fresh: 'Harvested this week' },
-  { id: 7, name: 'Fresh Spinach', variety: 'Baby Leaf', grade: 'Grade A', price: '$1.50', unit: 'bunch', qty: '150 bunches', farmer: 'Leafy Greens Co.', location: 'Dar es Salaam, Tanzania', rating: 4.4, reviews: 31, img: 'https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400&q=80', verified: false, fresh: 'Harvested today' },
-  { id: 8, name: 'Alphonso Mangoes', variety: 'Alphonso', grade: 'Grade A', price: '$4.50', unit: 'kg', qty: '600 kg', farmer: 'Tropical Fruits Ltd', location: 'Accra, Ghana', rating: 4.8, reviews: 98, img: 'https://images.unsplash.com/photo-1553279768-865429fa0078?w=400&q=80', verified: true, fresh: 'Harvested 2 days ago' },
-];
+import { getListings } from '../../lib/listingsData';
+import { farmerListingsStore } from '../../lib/farmerListingsStore';
 
 const cropTypes = ['All', 'Vegetables', 'Fruits', 'Grains', 'Dairy & Eggs', 'Honey'];
 const grades = ['All Grades', 'Grade A', 'Grade B', 'Organic'];
 const locations = ['All Locations', 'Kenya', 'Uganda', 'Ghana', 'Nigeria', 'Ethiopia', 'Tanzania'];
 
 export default function BrowseListings() {
+  const [allListings, setAllListings] = useState(getListings());
   const [search, setSearch] = useState('');
   const [cropType, setCropType] = useState('All');
   const [grade, setGrade] = useState('All Grades');
   const [location, setLocation] = useState('All Locations');
   const [showFilters, setShowFilters] = useState(false);
 
-  const filtered = listings.filter(l => {
+  // Re-read store whenever farmer adds/edits a listing
+  useEffect(() => farmerListingsStore.subscribe(() => setAllListings(getListings())), []);
+
+  const filtered = allListings.filter(l => {
     const matchSearch = l.name.toLowerCase().includes(search.toLowerCase()) || l.farmer.toLowerCase().includes(search.toLowerCase());
     const matchGrade = grade === 'All Grades' || l.grade === grade;
     const matchLocation = location === 'All Locations' || l.location.includes(location);
@@ -38,27 +33,19 @@ export default function BrowseListings() {
         <p className="text-gray-500 text-sm mt-0.5">Discover fresh produce from verified farmers across Africa.</p>
       </div>
 
-      {/* Search + filter bar */}
       <div className="flex flex-col sm:flex-row gap-3 mb-5">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Search crops, farmers, locations..."
-            value={search}
+          <input type="text" placeholder="Search crops, farmers, locations..." value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-green-300 transition"
-          />
+            className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-green-300 transition" />
         </div>
-        <button
-          onClick={() => setShowFilters(!showFilters)}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-semibold transition ${showFilters ? 'bg-green-600 text-white border-green-600' : 'bg-white border-gray-200 text-gray-600 hover:border-green-300'}`}
-        >
+        <button onClick={() => setShowFilters(!showFilters)}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-semibold transition ${showFilters ? 'bg-green-600 text-white border-green-600' : 'bg-white border-gray-200 text-gray-600 hover:border-green-300'}`}>
           <SlidersHorizontal className="w-4 h-4" /> Filters
         </button>
       </div>
 
-      {/* Expandable filters */}
       {showFilters && (
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 mb-5 animate-slide-up">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -67,9 +54,7 @@ export default function BrowseListings() {
               <div className="flex flex-wrap gap-2">
                 {cropTypes.map(c => (
                   <button key={c} onClick={() => setCropType(c)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${cropType === c ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-green-50'}`}>
-                    {c}
-                  </button>
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${cropType === c ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-green-50'}`}>{c}</button>
                 ))}
               </div>
             </div>
@@ -78,9 +63,7 @@ export default function BrowseListings() {
               <div className="flex flex-wrap gap-2">
                 {grades.map(g => (
                   <button key={g} onClick={() => setGrade(g)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${grade === g ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-green-50'}`}>
-                    {g}
-                  </button>
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${grade === g ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-green-50'}`}>{g}</button>
                 ))}
               </div>
             </div>
@@ -89,9 +72,7 @@ export default function BrowseListings() {
               <div className="flex flex-wrap gap-2">
                 {locations.map(l => (
                   <button key={l} onClick={() => setLocation(l)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${location === l ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-green-50'}`}>
-                    {l}
-                  </button>
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${location === l ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-green-50'}`}>{l}</button>
                 ))}
               </div>
             </div>
@@ -105,7 +86,6 @@ export default function BrowseListings() {
 
       <p className="text-sm text-gray-400 mb-4">{filtered.length} listings found</p>
 
-      {/* Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {filtered.map(item => (
           <div key={item.id} className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 card-hover group">
@@ -133,7 +113,7 @@ export default function BrowseListings() {
                 <span className="text-xs text-gray-400">({item.reviews})</span>
               </div>
               <div className="flex items-center justify-between mb-3">
-                <span className="text-green-600 font-black text-lg">{item.price}</span>
+                <span className="text-green-600 font-black text-lg">${item.price}</span>
                 <span className="text-xs text-gray-400">/{item.unit} · {item.qty}</span>
               </div>
               <div className="flex gap-2">
@@ -141,9 +121,19 @@ export default function BrowseListings() {
                   className="flex-1 text-center py-2 gradient-green text-white text-xs font-bold rounded-xl hover:opacity-90 transition">
                   View Details
                 </Link>
-                <button className="w-9 h-9 flex items-center justify-center bg-gray-50 hover:bg-green-50 rounded-xl text-gray-400 hover:text-green-600 transition">
+                {/* WhatsApp message */}
+                <a href={`https://wa.me/${item.farmerWhatsApp}?text=Hi%20${encodeURIComponent(item.farmerOwner)}%2C%20I'm%20interested%20in%20your%20${encodeURIComponent(item.name)}%20listing%20on%20AgriLink.`}
+                  target="_blank" rel="noopener noreferrer"
+                  className="w-9 h-9 flex items-center justify-center bg-gray-50 hover:bg-green-50 rounded-xl text-gray-400 hover:text-green-600 transition"
+                  title="WhatsApp">
                   <MessageCircle className="w-4 h-4" />
-                </button>
+                </a>
+                {/* Call */}
+                <a href={`tel:${item.farmerPhone}`}
+                  className="w-9 h-9 flex items-center justify-center bg-gray-50 hover:bg-blue-50 rounded-xl text-gray-400 hover:text-blue-600 transition"
+                  title="Call farmer">
+                  <Phone className="w-4 h-4" />
+                </a>
               </div>
             </div>
           </div>

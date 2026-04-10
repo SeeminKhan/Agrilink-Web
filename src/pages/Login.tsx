@@ -18,24 +18,22 @@ export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) { setError('Please fill in all fields.'); return; }
     setLoading(true);
     setError('');
-    setTimeout(() => {
-      const result = login(email, password, role);
-      setLoading(false);
-      if (result.ok) {
-        navigate(role === 'farmer' ? '/farmer/dashboard' : role === 'recruiter' ? '/recruiter/dashboard' : '/buyer/dashboard');
-      } else {
-        setError(result.error || 'Invalid credentials.');
-      }
-    }, 800);
+    const result = await login(email, password, role);
+    setLoading(false);
+    if (result.ok) {
+      navigate(role === 'farmer' ? '/farmer/dashboard' : role === 'recruiter' ? '/recruiter/dashboard' : '/buyer/dashboard');
+    } else {
+      setError(result.error || 'Invalid credentials.');
+    }
   };
 
-  const quickLogin = (demoEmail: string, demoRole: Role) => {
-    login(demoEmail, 'password', demoRole);
+  const quickLogin = async (demoEmail: string, demoRole: Role) => {
+    await login(demoEmail, 'password', demoRole);
     navigate(demoRole === 'farmer' ? '/farmer/dashboard' : demoRole === 'recruiter' ? '/recruiter/dashboard' : '/buyer/dashboard');
   };
 

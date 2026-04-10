@@ -1,20 +1,25 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Sprout, LayoutDashboard, LogOut } from 'lucide-react';
+import { Menu, X, Sprout, LayoutDashboard, LogOut, Globe } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../lib/AuthContext';
+import { setLanguage, LANG_OPTIONS, type SupportedLang } from '../lib/i18n';
 
 const navLinks = [
-  { label: 'Home', to: '/' },
-  { label: 'About', to: '/about' },
-  { label: 'Features', to: '/features' },
+  { labelKey: 'nav.home',     to: '/' },
+  { labelKey: 'nav.about',    to: '/about' },
+  { labelKey: 'nav.features', to: '/features' },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { t, i18n } = useTranslation();
+  const currentLang = LANG_OPTIONS.find(l => l.code === i18n.language) || LANG_OPTIONS[0];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -37,19 +42,37 @@ export default function Navbar() {
 
           <div className="hidden md:flex items-center gap-6">
             {navLinks.map(link => (
-              <Link key={link.label} to={link.to}
+              <Link key={link.to} to={link.to}
                 className={`text-sm font-medium transition-colors ${
                   location.pathname === link.to
                     ? scrolled ? '' : 'text-green-300'
                     : scrolled ? 'text-gray-700 hover:text-gray-900' : 'text-white/80 hover:text-white'
                 }`}
                 style={location.pathname === link.to && scrolled ? { color: '#0D592A' } : {}}>
-                {link.label}
+                {t(link.labelKey)}
               </Link>
             ))}
           </div>
 
           <div className="hidden md:flex items-center gap-3">
+            {/* Language switcher */}
+            <div className="relative">
+              <button onClick={() => setLangOpen(o => !o)}
+                className={`flex items-center gap-1.5 text-sm font-medium px-3 py-2 rounded-lg transition ${scrolled ? 'hover:bg-gray-100 text-gray-600' : 'text-white/80 hover:bg-white/10'}`}>
+                <Globe className="w-4 h-4" />
+                <span>{currentLang.flag} {currentLang.code.toUpperCase()}</span>
+              </button>
+              {langOpen && (
+                <div className="absolute right-0 top-full mt-1 bg-white rounded-2xl shadow-xl border border-gray-100 py-1 z-50 min-w-[140px]">
+                  {LANG_OPTIONS.map(l => (
+                    <button key={l.code} onClick={() => { setLanguage(l.code as SupportedLang); setLangOpen(false); }}
+                      className={`w-full flex items-center gap-2.5 px-4 py-2.5 text-sm hover:bg-gray-50 transition ${i18n.language === l.code ? 'font-bold text-green-700' : 'text-gray-700'}`}>
+                      <span>{l.flag}</span> {l.native}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
             {user ? (
               <>
                 <Link to={`/${user.role}/dashboard`}

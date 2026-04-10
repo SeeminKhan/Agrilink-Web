@@ -17,6 +17,10 @@ import MyListings from './pages/farmer/MyListings';
 import AddListing from './pages/farmer/AddListing';
 import AIPrice from './pages/farmer/AIPrice';
 import Training from './pages/farmer/Training';
+import DemandForecast from './pages/farmer/DemandForecast';
+import BuyerMatching from './pages/farmer/BuyerMatching';
+
+import FarmerMatching from './pages/buyer/FarmerMatching';
 
 // Buyer
 import BuyerDashboard from './pages/buyer/BuyerDashboard';
@@ -62,6 +66,8 @@ function Layout() {
           <Route path="add-listing" element={<AddListing />} />
           <Route path="ai-price" element={<AIPrice />} />
           <Route path="training" element={<Training />} />
+          <Route path="demand-forecast" element={<DemandForecast />} />
+          <Route path="buyer-matching" element={<BuyerMatching />} />
           <Route path="settings" element={<Settings />} />
         </Route>
 
@@ -72,6 +78,7 @@ function Layout() {
           <Route path="browse" element={<BrowseListings />} />
           <Route path="listing/:id" element={<ListingDetails />} />
           <Route path="quality" element={<QualityVerification />} />
+          <Route path="farmer-matching" element={<FarmerMatching />} />
           <Route path="orders" element={<Orders />} />
           <Route path="settings" element={<Settings />} />
         </Route>

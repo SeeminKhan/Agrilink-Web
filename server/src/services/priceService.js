@@ -10,14 +10,21 @@ const axios = require('axios');
 const predictPrice = async ({ crop, quantity, location, season = 'current' }) => {
   try {
     const { data } = await axios.post(
-      process.env.FASTAPI_URL || 'http://localhost:8000/predict',
-      { crop, quantity, location, season },
-      { timeout: 5000 }
+      process.env.FASTAPI_URL || 'https://agrilink-ml-3.onrender.com/predict-price',
+      {
+        crop: crop.toLowerCase(),
+        season,
+        market: location || 'Nashik',
+        quality_grade: 'B',
+        quantity_quintals: Math.max(1, Math.round(quantity / 100)),
+        rainfall_mm: 80,
+        days_to_market: 1,
+      },
+      { timeout: 8000 }
     );
-    return data.recommendedPrice;
+    return data.predicted_price_per_kg;
   } catch {
-    // Heuristic fallback: base price map
-    const base = { tomatoes: 2.5, maize: 0.8, avocado: 3.2, default: 1.5 };
+    const base = { tomatoes: 18, maize: 8, avocado: 32, default: 15 };
     return (base[crop.toLowerCase()] || base.default) * (1 + Math.random() * 0.2);
   }
 };

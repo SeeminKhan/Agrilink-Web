@@ -8,16 +8,117 @@ import {
 import { fadeIn, slideUp, staggerContainer, scaleIn } from '../../lib/motion';
 import { jobsStore, type Job } from '../../lib/jobsStore';
 
-// ─── DATA ────────────────────────────────────────────────────────────────────
+// ─── TRAINING VIDEO DATA ─────────────────────────────────────────────────────
 
-const trainingModules = [
-  { id: 1, title: 'Modern Irrigation Techniques', category: 'Water Management', duration: '45 min', level: 'Beginner', img: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=500&q=80', progress: 100, badge: 'Completed', badgeColor: 'bg-green-100 text-green-700', learnings: ['Drip vs sprinkler systems', 'Water conservation methods', 'Scheduling irrigation cycles'] },
-  { id: 2, title: 'Organic Pest Control Methods', category: 'Crop Protection', duration: '1h 20min', level: 'Intermediate', img: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=500&q=80', progress: 60, badge: 'In Progress', badgeColor: 'bg-yellow-100 text-yellow-700', learnings: ['Identifying common pests', 'Natural pesticide recipes', 'Integrated pest management'] },
-  { id: 3, title: 'Soil Health & Composting', category: 'Soil Science', duration: '55 min', level: 'Beginner', img: 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=500&q=80', progress: 0, badge: 'New', badgeColor: 'bg-blue-100 text-blue-700', learnings: ['Soil pH and nutrients', 'Composting techniques', 'Cover cropping benefits'] },
-  { id: 4, title: 'Post-Harvest Storage & Handling', category: 'Post-Harvest', duration: '1h 10min', level: 'Intermediate', img: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=500&q=80', progress: 0, badge: 'Popular', badgeColor: 'bg-orange-100 text-orange-700', learnings: ['Cold chain management', 'Packaging best practices', 'Reducing post-harvest losses'] },
-  { id: 5, title: 'Digital Marketing for Farmers', category: 'Business Skills', duration: '2h', level: 'Advanced', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&q=80', progress: 0, badge: 'New', badgeColor: 'bg-blue-100 text-blue-700', learnings: ['Social media for farm sales', 'Building an online presence', 'Pricing strategies'] },
-  { id: 6, title: 'Climate-Smart Agriculture', category: 'Sustainability', duration: '1h 30min', level: 'Intermediate', img: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=500&q=80', progress: 0, badge: 'Featured', badgeColor: 'bg-purple-100 text-purple-700', learnings: ['Adapting to climate change', 'Carbon sequestration basics', 'Drought-resistant crops'] },
+export interface TrainingVideo {
+  id: number;
+  title: string;
+  description: string;
+  category: 'Crop Training' | 'Soil & Composting' | 'Pest Control' | 'Irrigation' | 'Post-Harvest' | 'Business Skills' | 'Machinery' | 'Dairy';
+  language: 'Hindi' | 'Marathi' | 'English';
+  youtubeId: string;          // YouTube video ID
+  thumbnail: string;          // YouTube thumbnail URL
+  duration: string;
+  channel: string;
+  views: string;
+  uploadedAt: string;
+  learnings: string[];
+  progress: number;           // 0–100
+}
+
+const trainingVideos: TrainingVideo[] = [
+  {
+    id: 1,
+    title: 'Tomato Farming — Complete Guide (Hindi)',
+    description: 'टमाटर की उन्नत खेती — बीज चयन, नर्सरी तैयारी, रोपाई, सिंचाई, खाद और कीट नियंत्रण। महाराष्ट्र के किसानों के लिए पूरी जानकारी।',
+    category: 'Crop Training', language: 'Hindi',
+    youtubeId: 'LXb3EKWsInQ',
+    thumbnail: 'https://img.youtube.com/vi/LXb3EKWsInQ/hqdefault.jpg',
+    duration: '14 min', channel: 'Krishi Jagran', views: '2.4M', uploadedAt: 'Jan 2024',
+    learnings: ['बीज चयन और नर्सरी तैयारी', 'रोपाई की सही विधि', 'जैविक कीट नियंत्रण'],
+    progress: 100,
+  },
+  {
+    id: 2,
+    title: 'Drip Irrigation — Setup & Benefits',
+    description: 'How to install drip irrigation on small and medium farms in India. Saves up to 50% water, increases yield, and reduces labour. Practical step-by-step guide.',
+    category: 'Irrigation', language: 'English',
+    youtubeId: 'wjHZqReqHM4',
+    thumbnail: 'https://img.youtube.com/vi/wjHZqReqHM4/hqdefault.jpg',
+    duration: '11 min', channel: 'AgriTech India', views: '980K', uploadedAt: 'Mar 2024',
+    learnings: ['Drip vs sprinkler comparison', 'Step-by-step installation', 'Maintenance & cost savings'],
+    progress: 60,
+  },
+  {
+    id: 3,
+    title: 'Organic Compost — Jeevamrut & Vermicompost',
+    description: 'घर पर जैविक खाद (जीवामृत और वर्मीकम्पोस्ट) बनाने की आसान विधि। मिट्टी की उर्वरता बढ़ाएं बिना रासायनिक खाद के।',
+    category: 'Soil & Composting', language: 'Hindi',
+    youtubeId: 'nhh9DwNHFaQ',
+    thumbnail: 'https://img.youtube.com/vi/nhh9DwNHFaQ/hqdefault.jpg',
+    duration: '10 min', channel: 'Kisan Suvidha', views: '3.1M', uploadedAt: 'Dec 2023',
+    learnings: ['जीवामृत तैयार करने की विधि', 'वर्मीकम्पोस्ट सेटअप', 'उपयोग की मात्रा और समय'],
+    progress: 0,
+  },
+  {
+    id: 4,
+    title: 'Onion Farming — Nashik Method (Marathi)',
+    description: 'नाशिकच्या प्रसिद्ध कांदा शेतीची संपूर्ण माहिती. लागवड, खत व्यवस्थापन, काढणी आणि साठवणूक — सर्व टप्पे मराठीत.',
+    category: 'Crop Training', language: 'Marathi',
+    youtubeId: 'CEvDDdxBcSY',
+    thumbnail: 'https://img.youtube.com/vi/CEvDDdxBcSY/hqdefault.jpg',
+    duration: '18 min', channel: 'Agrowon', views: '1.8M', uploadedAt: 'Feb 2024',
+    learnings: ['कांदा लागवडीची वेळ व पद्धत', 'खत व पाणी व्यवस्थापन', 'साठवणूक आणि बाजारपेठ'],
+    progress: 0,
+  },
+  {
+    id: 5,
+    title: 'Pest Control — Natural & Organic Methods',
+    description: 'Identify and control common crop pests using natural and organic methods. No harmful chemicals — safe for soil, water, and consumers.',
+    category: 'Pest Control', language: 'English',
+    youtubeId: 'Ks-_Mh1QhMc',
+    thumbnail: 'https://img.youtube.com/vi/Ks-_Mh1QhMc/hqdefault.jpg',
+    duration: '13 min', channel: 'ICAR India', views: '650K', uploadedAt: 'Nov 2023',
+    learnings: ['Identifying common pests', 'Neem-based pesticide preparation', 'Integrated pest management'],
+    progress: 0,
+  },
+  {
+    id: 6,
+    title: 'Post-Harvest Storage — Reduce Losses',
+    description: 'Practical techniques to store tomatoes, onions, and vegetables after harvest. Reduce post-harvest losses from 30% to under 5% using simple, low-cost methods.',
+    category: 'Post-Harvest', language: 'English',
+    youtubeId: 'inVZoI1AkC8',
+    thumbnail: 'https://img.youtube.com/vi/inVZoI1AkC8/hqdefault.jpg',
+    duration: '9 min', channel: 'ICAR Post-Harvest', views: '420K', uploadedAt: 'Oct 2023',
+    learnings: ['Temperature & humidity control', 'Low-cost storage structures', 'Grading before storage'],
+    progress: 0,
+  },
+  {
+    id: 7,
+    title: 'Soybean Pest Management (Marathi)',
+    description: 'सोयाबीन पिकावरील प्रमुख कीड व रोगांची ओळख आणि जैविक उपाय. VNMKV तज्ञांचे मार्गदर्शन — फवारणीची वेळ आणि पद्धत.',
+    category: 'Pest Control', language: 'Marathi',
+    youtubeId: 'YbZiSA7YDNE',
+    thumbnail: 'https://img.youtube.com/vi/YbZiSA7YDNE/hqdefault.jpg',
+    duration: '20 min', channel: 'VNMKV Parbhani', views: '650K', uploadedAt: 'Nov 2023',
+    learnings: ['प्रमुख कीडींची ओळख', 'जैविक कीटकनाशके', 'फवारणीची वेळ व पद्धत'],
+    progress: 0,
+  },
+  {
+    id: 8,
+    title: 'Sell Your Crop Online — Digital Marketing for Farmers',
+    description: 'How to sell your crop directly to buyers online — listing creation, pricing strategy, WhatsApp marketing, and using AgriLink to get the best price.',
+    category: 'Business Skills', language: 'Hindi',
+    youtubeId: 'xvFZjo5PgG0',
+    thumbnail: 'https://img.youtube.com/vi/xvFZjo5PgG0/hqdefault.jpg',
+    duration: '7 min', channel: 'AgriLink Official', views: '210K', uploadedAt: 'Jan 2025',
+    learnings: ['Online listing creation', 'AI price suggestion tool', 'Direct buyer connection'],
+    progress: 0,
+  },
 ];
+
+const CATEGORIES = ['All', 'Crop Training', 'Irrigation', 'Soil & Composting', 'Pest Control', 'Post-Harvest', 'Business Skills', 'Machinery', 'Dairy'];
+const LANGUAGES  = ['All', 'Hindi', 'Marathi', 'English'];
 
 const levelColor: Record<string, string> = {
   Beginner: 'text-green-600 bg-green-50',
@@ -250,70 +351,95 @@ function JobModal({ job, onClose }: { job: Job; onClose: () => void }) {
   );
 }
 
-// ─── TRAINING DETAIL MODAL ───────────────────────────────────────────────────
+// ─── TRAINING VIDEO MODAL (YouTube embed) ────────────────────────────────────
 
-function TrainingModal({ mod, onClose }: { mod: typeof trainingModules[0]; onClose: () => void }) {
-  const [completed, setCompleted] = useState(mod.progress === 100);
+function TrainingModal({ video, onClose }: { video: TrainingVideo; onClose: () => void }) {
+  const [completed, setCompleted] = useState(video.progress === 100);
+
+  const langColor: Record<string, string> = {
+    Hindi: 'bg-orange-100 text-orange-700',
+    Marathi: 'bg-purple-100 text-purple-700',
+    English: 'bg-blue-100 text-blue-700',
+  };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
-      <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        className="relative bg-white rounded-3xl shadow-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto z-10">
-        {/* Video area */}
-        <div className="relative h-52 bg-gray-900 rounded-t-3xl overflow-hidden">
-          <img src={mod.img} alt={mod.title} className="w-full h-full object-cover opacity-60" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-xl cursor-pointer hover:scale-105 transition">
-              <Play className="w-7 h-7 fill-green-600 text-green-600 ml-1" />
-            </div>
-          </div>
-          <button onClick={onClose} className="absolute top-4 right-4 w-9 h-9 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition shadow">
-            <X className="w-4 h-4 text-gray-700" />
-          </button>
-          {/* Progress bar */}
-          <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-white/20">
-            <motion.div className="h-full bg-green-400" initial={{ width: 0 }} animate={{ width: `${mod.progress}%` }} transition={{ duration: 1, ease: 'easeOut' }} />
-          </div>
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
+      <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }}
+        className="relative bg-white rounded-3xl shadow-2xl w-full max-w-2xl z-10 max-h-[95vh] overflow-y-auto">
+
+        {/* Close button */}
+        <button onClick={onClose}
+          className="absolute top-3 right-3 z-20 w-9 h-9 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center transition">
+          <X className="w-4 h-4 text-white" />
+        </button>
+
+        {/* ── YouTube embed ── */}
+        <div className="relative w-full rounded-t-3xl overflow-hidden bg-black"
+          style={{ paddingTop: '56.25%' /* 16:9 */ }}>
+          <iframe
+            className="absolute inset-0 w-full h-full"
+            src={`https://www.youtube.com/embed/${video.youtubeId}?rel=0&modestbranding=1&autoplay=1`}
+            title={video.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
         </div>
 
-        <div className="p-6">
-          <div className="flex items-start justify-between gap-3 mb-4">
-            <div>
-              <p className="text-xs text-gray-400 mb-1">{mod.category}</p>
-              <h2 className="text-lg font-black text-gray-800">{mod.title}</h2>
-            </div>
-            <span className={`text-xs font-bold px-2.5 py-1 rounded-full shrink-0 ${mod.badgeColor}`}>{mod.badge}</span>
+        {/* ── Metadata ── */}
+        <div className="p-5">
+          {/* Tags row */}
+          <div className="flex flex-wrap gap-2 mb-3">
+            <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${langColor[video.language] || 'bg-gray-100 text-gray-600'}`}>
+              🌐 {video.language}
+            </span>
+            <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-green-100 text-green-700">
+              {video.category}
+            </span>
+            <span className="flex items-center gap-1 text-xs font-semibold text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">
+              <Clock className="w-3 h-3" /> {video.duration}
+            </span>
           </div>
 
-          <div className="flex items-center gap-4 mb-5 text-xs text-gray-500">
-            <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{mod.duration}</span>
-            <span className={`font-bold px-2 py-0.5 rounded-full text-xs ${levelColor[mod.level]}`}>{mod.level}</span>
+          <h2 className="text-lg font-black text-gray-900 mb-1 leading-snug">{video.title}</h2>
+
+          {/* Channel + views */}
+          <div className="flex items-center gap-3 text-xs text-gray-400 mb-3">
+            <span className="font-semibold text-gray-600">{video.channel}</span>
+            <span>·</span>
+            <span>{video.views} views</span>
+            <span>·</span>
+            <span>{video.uploadedAt}</span>
           </div>
 
-          {/* Progress tracker */}
-          <div className="mb-5">
+          <p className="text-sm text-gray-600 leading-relaxed mb-4">{video.description}</p>
+
+          {/* Progress bar */}
+          <div className="mb-4">
             <div className="flex justify-between text-xs text-gray-500 mb-1.5">
-              <span>Progress</span><span className="font-bold">{mod.progress}%</span>
+              <span>Progress</span>
+              <span className="font-bold">{video.progress}%</span>
             </div>
             <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
               <motion.div className="h-full rounded-full" style={{ backgroundColor: '#0D592A' }}
-                initial={{ width: 0 }} animate={{ width: `${mod.progress}%` }} transition={{ duration: 1, ease: 'easeOut' }} />
+                initial={{ width: 0 }} animate={{ width: `${video.progress}%` }} transition={{ duration: 1 }} />
             </div>
           </div>
 
-          <div className="mb-6">
+          {/* Key learnings */}
+          <div className="mb-5">
             <h4 className="text-xs font-black text-gray-400 uppercase tracking-wider mb-3">Key Learnings</h4>
             <ul className="space-y-2">
-              {mod.learnings.map(l => (
+              {video.learnings.map(l => (
                 <li key={l} className="flex items-start gap-2 text-sm text-gray-600">
-                  <CheckCircle className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />{l}
+                  <CheckCircle className="w-4 h-4 text-green-500 shrink-0 mt-0.5" /> {l}
                 </li>
               ))}
             </ul>
           </div>
 
+          {/* Actions */}
           {completed ? (
             <div className="space-y-3">
               <div className="flex items-center gap-3 p-4 bg-green-50 rounded-2xl border border-green-100">
@@ -330,11 +456,13 @@ function TrainingModal({ mod, onClose }: { mod: typeof trainingModules[0]; onClo
             </div>
           ) : (
             <div className="flex gap-3">
-              <button className="flex-1 py-3 rounded-2xl text-white font-bold text-sm hover:opacity-90 transition"
-                style={{ backgroundColor: '#0D592A' }}>
-                {mod.progress > 0 ? 'Continue Learning' : 'Start Learning'}
-              </button>
-              {mod.progress > 0 && (
+              <a href={`https://www.youtube.com/watch?v=${video.youtubeId}`}
+                target="_blank" rel="noopener noreferrer"
+                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl text-white font-bold text-sm hover:opacity-90 transition"
+                style={{ backgroundColor: '#FF0000' }}>
+                <Play className="w-4 h-4 fill-white" /> Watch on YouTube
+              </a>
+              {video.progress > 0 && (
                 <button onClick={() => setCompleted(true)}
                   className="px-5 py-3 rounded-2xl border border-gray-200 text-sm font-semibold text-gray-600 hover:bg-gray-50 transition">
                   Mark Complete
@@ -468,19 +596,34 @@ function JobsTab() {
 // ─── TRAINING TAB ────────────────────────────────────────────────────────────
 
 function TrainingTab() {
-  const [selectedMod, setSelectedMod] = useState<typeof trainingModules[0] | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<TrainingVideo | null>(null);
+  const [category, setCategory]           = useState('All');
+  const [language, setLanguage]           = useState('All');
+  const [search, setSearch]               = useState('');
 
-  const completed = trainingModules.filter(m => m.progress === 100).length;
-  const inProgress = trainingModules.filter(m => m.progress > 0 && m.progress < 100).length;
-  const available = trainingModules.filter(m => m.progress === 0).length;
+  const filtered = trainingVideos.filter(v =>
+    (category === 'All' || v.category === category) &&
+    (language === 'All' || v.language === language) &&
+    (v.title.toLowerCase().includes(search.toLowerCase()) ||
+     v.description.toLowerCase().includes(search.toLowerCase()))
+  );
+
+  const completed  = trainingVideos.filter(v => v.progress === 100).length;
+  const inProgress = trainingVideos.filter(v => v.progress > 0 && v.progress < 100).length;
+
+  const langColor: Record<string, string> = {
+    Hindi: 'bg-orange-100 text-orange-700',
+    Marathi: 'bg-purple-100 text-purple-700',
+    English: 'bg-blue-100 text-blue-700',
+  };
 
   return (
     <motion.div variants={fadeIn} initial="hidden" animate="show">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
         <div>
           <h2 className="text-xl font-black text-gray-900">Skill Development & Training</h2>
-          <p className="text-sm text-gray-500 mt-0.5">Upgrade your farming techniques with expert-led modules</p>
+          <p className="text-sm text-gray-500 mt-0.5">Expert-led video modules in Hindi, Marathi & English</p>
         </div>
         <div className="flex items-center gap-2 border rounded-2xl px-4 py-2 w-fit" style={{ backgroundColor: '#f0f7f3', borderColor: '#aed4bc' }}>
           <Award className="w-4 h-4" style={{ color: '#0D592A' }} />
@@ -489,74 +632,155 @@ function TrainingTab() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-3 gap-3 mb-5">
         {[
-          { label: 'Completed', value: completed, icon: Award, color: 'bg-green-50 text-green-600' },
-          { label: 'In Progress', value: inProgress, icon: BookOpen, color: 'bg-yellow-50 text-yellow-600' },
-          { label: 'Available', value: available, icon: Play, color: 'bg-blue-50 text-blue-600' },
+          { label: 'Completed',   value: completed,                    icon: Award,    color: 'bg-green-50 text-green-600' },
+          { label: 'In Progress', value: inProgress,                   icon: BookOpen, color: 'bg-yellow-50 text-yellow-600' },
+          { label: 'Available',   value: trainingVideos.length - completed - inProgress, icon: Play, color: 'bg-blue-50 text-blue-600' },
         ].map(({ label, value, icon: Icon, color }) => (
-          <div key={label} className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 text-center">
-            <div className={`w-9 h-9 ${color} rounded-xl flex items-center justify-center mx-auto mb-2`}>
+          <div key={label} className="bg-white rounded-2xl p-3 shadow-sm border border-gray-100 text-center">
+            <div className={`w-8 h-8 ${color} rounded-xl flex items-center justify-center mx-auto mb-1.5`}>
               <Icon className="w-4 h-4" />
             </div>
-            <p className="text-2xl font-black text-gray-900">{value}</p>
+            <p className="text-xl font-black text-gray-900">{value}</p>
             <p className="text-xs text-gray-500">{label}</p>
           </div>
         ))}
       </div>
 
-      {/* Modules grid */}
+      {/* Search */}
+      <div className="relative mb-4">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+        <input value={search} onChange={e => setSearch(e.target.value)}
+          placeholder="Search videos..."
+          className="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-green-300 transition" />
+      </div>
+
+      {/* Filters */}
+      <div className="space-y-3 mb-6">
+        {/* Category filter */}
+        <div>
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Category</p>
+          <div className="flex flex-wrap gap-2">
+            {CATEGORIES.map(c => (
+              <button key={c} onClick={() => setCategory(c)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition ${category === c ? 'text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                style={category === c ? { backgroundColor: '#0D592A' } : {}}>
+                {c}
+              </button>
+            ))}
+          </div>
+        </div>
+        {/* Language filter */}
+        <div>
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Language</p>
+          <div className="flex gap-2">
+            {LANGUAGES.map(l => (
+              <button key={l} onClick={() => setLanguage(l)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition ${language === l ? 'text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                style={language === l ? { backgroundColor: '#0D592A' } : {}}>
+                {l === 'All' ? '🌐 All' : l === 'Hindi' ? '🇮🇳 Hindi' : l === 'Marathi' ? '🟠 Marathi' : '🇬🇧 English'}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <p className="text-xs text-gray-400 mb-4">{filtered.length} video{filtered.length !== 1 ? 's' : ''} found</p>
+
+      {/* Video grid */}
       <motion.div variants={staggerContainer} initial="hidden" animate="show"
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {trainingModules.map(m => (
-          <motion.div key={m.id} variants={scaleIn}
+        {filtered.map(v => (
+          <motion.div key={v.id} variants={scaleIn}
             className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 card-hover group cursor-pointer"
-            onClick={() => setSelectedMod(m)}>
-            <div className="relative h-40 overflow-hidden">
-              <img src={m.img} alt={m.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-              <span className={`absolute top-3 left-3 text-xs font-bold px-2.5 py-1 rounded-full ${m.badgeColor}`}>{m.badge}</span>
-              {m.progress === 0 && (
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                  <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center shadow-lg">
-                    <Play className="w-5 h-5 text-green-600 fill-green-600 ml-0.5" />
-                  </div>
+            onClick={() => setSelectedVideo(v)}>
+
+            {/* Thumbnail with play overlay */}
+            <div className="relative h-44 overflow-hidden bg-gray-900">
+              <img
+                src={v.thumbnail}
+                alt={v.title}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
+                onError={e => {
+                  // Fallback to topic-relevant image if YouTube thumbnail fails
+                  const fallbacks: Record<string, string> = {
+                    'Crop Training': 'https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=500&q=80',
+                    'Irrigation': 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=500&q=80',
+                    'Soil & Composting': 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=500&q=80',
+                    'Pest Control': 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=500&q=80',
+                    'Post-Harvest': 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=500&q=80',
+                    'Business Skills': 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&q=80',
+                    'Machinery': 'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=500&q=80',
+                    'Dairy': 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=500&q=80',
+                  };
+                  (e.target as HTMLImageElement).src = fallbacks[v.category] || fallbacks['Crop Training'];
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+
+              {/* Play button */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                <div className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center shadow-xl">
+                  <Play className="w-6 h-6 text-white fill-white ml-0.5" />
+                </div>
+              </div>
+
+              {/* Duration badge */}
+              <div className="absolute bottom-3 right-3 bg-black/70 text-white text-xs font-bold px-2 py-0.5 rounded">
+                {v.duration}
+              </div>
+
+              {/* Progress bar */}
+              {v.progress > 0 && (
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20">
+                  <div className="h-full bg-green-400" style={{ width: `${v.progress}%` }} />
                 </div>
               )}
-              {m.progress > 0 && m.progress < 100 && (
-                <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-white/20">
-                  <div className="h-full bg-yellow-400 transition-all" style={{ width: `${m.progress}%` }} />
-                </div>
-              )}
-              {m.progress === 100 && (
-                <div className="absolute bottom-3 right-3">
-                  <div className="w-7 h-7 bg-green-500 rounded-full flex items-center justify-center shadow">
-                    <CheckCircle className="w-4 h-4 text-white" />
-                  </div>
+
+              {/* Completed badge */}
+              {v.progress === 100 && (
+                <div className="absolute top-3 right-3 w-7 h-7 bg-green-500 rounded-full flex items-center justify-center shadow">
+                  <CheckCircle className="w-4 h-4 text-white" />
                 </div>
               )}
             </div>
+
+            {/* Card body */}
             <div className="p-4">
-              <p className="text-xs text-gray-400 mb-1">{m.category}</p>
-              <h3 className="font-bold text-gray-800 text-sm mb-3 leading-snug">{m.title}</h3>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3 text-xs text-gray-400">
-                  <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{m.duration}</span>
-                  <span className={`font-bold px-1.5 py-0.5 rounded text-xs ${levelColor[m.level]}`}>{m.level}</span>
-                </div>
-                <button className="flex items-center gap-1 text-xs font-bold transition" style={{ color: '#0D592A' }}>
-                  {m.progress === 100 ? 'Review' : m.progress > 0 ? 'Continue' : 'Start'}
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
+              {/* Language + category */}
+              <div className="flex items-center gap-2 mb-2">
+                <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${langColor[v.language] || 'bg-gray-100 text-gray-600'}`}>
+                  {v.language}
+                </span>
+                <span className="text-xs text-gray-400 truncate">{v.category}</span>
               </div>
+
+              <h3 className="font-bold text-gray-800 text-sm mb-1 leading-snug line-clamp-2">{v.title}</h3>
+              <p className="text-xs text-gray-400 mb-3 truncate">{v.channel} · {v.views} views</p>
+
+              <button
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-white text-xs font-bold hover:opacity-90 transition"
+                style={{ backgroundColor: v.progress === 100 ? '#059669' : '#0D592A' }}>
+                <Play className="w-3.5 h-3.5 fill-white" />
+                {v.progress === 100 ? 'Watch Again' : v.progress > 0 ? 'Continue' : 'Watch Now'}
+              </button>
             </div>
           </motion.div>
         ))}
+
+        {filtered.length === 0 && (
+          <div className="col-span-full text-center py-16 text-gray-400">
+            <BookOpen className="w-10 h-10 mx-auto mb-3 opacity-30" />
+            <p className="font-semibold">No videos match your filters</p>
+            <p className="text-sm mt-1">Try a different category or language</p>
+          </div>
+        )}
       </motion.div>
 
-      {/* Training modal */}
+      {/* Video modal */}
       <AnimatePresence>
-        {selectedMod && <TrainingModal mod={selectedMod} onClose={() => setSelectedMod(null)} />}
+        {selectedVideo && <TrainingModal video={selectedVideo} onClose={() => setSelectedVideo(null)} />}
       </AnimatePresence>
     </motion.div>
   );

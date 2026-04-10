@@ -8,7 +8,7 @@ const products: Product[] = [
   { id: 2, name: 'Fresh Maize (Corn)', price: '$0.80', unit: 'kg', image: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=400&q=80', seller: 'Sunrise Farms', location: 'Kampala, Uganda', rating: 4.6, reviews: 89, badge: 'Hot Deal', badgeColor: '#c2410c' },
   { id: 3, name: 'Premium Avocados', price: '$3.20', unit: 'kg', image: 'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=400&q=80', seller: 'Hillside Orchards', location: 'Meru, Kenya', rating: 4.9, reviews: 210, badge: 'Premium', badgeColor: '#7c3aed' },
   { id: 4, name: 'Brown Eggs (Tray)', price: '$4.00', unit: 'tray', image: 'https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400&q=80', seller: 'Happy Hens Farm', location: 'Accra, Ghana', rating: 4.7, reviews: 67 },
-  { id: 5, name: 'Sweet Potatoes', price: '$1.20', unit: 'kg', image: 'https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=400&q=80', seller: 'Root & Soil Co.', location: 'Lagos, Nigeria', rating: 4.5, reviews: 43, badge: 'New', badgeColor: '#1d4ed8' },
+  { id: 5, name: 'Sweet Potatoes', price: '$1.20', unit: 'kg', image: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400&q=80', seller: 'Root & Soil Co.', location: 'Lagos, Nigeria', rating: 4.5, reviews: 43, badge: 'New', badgeColor: '#1d4ed8' },
   { id: 6, name: 'Raw Honey', price: '$8.00', unit: '500g', image: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400&q=80', seller: 'Bee Natural', location: 'Addis Ababa, Ethiopia', rating: 5.0, reviews: 156, badge: 'Best Seller', badgeColor: '#a16207' },
 ];
 
