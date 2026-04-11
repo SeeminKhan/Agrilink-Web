@@ -4,9 +4,8 @@ import { useTranslation } from 'react-i18next';
 import {
   Sprout, LayoutDashboard, List, PlusCircle, Sparkles, BookOpen,
   Settings, LogOut, ChevronLeft, ChevronRight,
-  Search, ShieldCheck, Package, Briefcase, Users, BarChart2, ClipboardList, TrendingUp, UserCheck,
-} from 'lucide-react';
-import { useAuth } from '../../lib/AuthContext';
+  Search, ShieldCheck, Package, Briefcase, Users, BarChart2, ClipboardList, TrendingUp, UserCheck, Snowflake, RotateCcw, Truck, Award,
+} from 'lucide-react';import { useAuth } from '../../lib/AuthContext';
 
 interface NavItem { icon: React.ElementType; label: string; to: string; }
 
@@ -24,7 +23,11 @@ export default function Sidebar({ role }: { role: 'farmer' | 'buyer' | 'recruite
     { icon: Sparkles,        label: t('sidebar.aiPrice'),        to: '/farmer/ai-price' },
     { icon: TrendingUp,      label: t('sidebar.demandForecast'), to: '/farmer/demand-forecast' },
     { icon: UserCheck,       label: t('sidebar.bestBuyers'),     to: '/farmer/buyer-matching' },
+    { icon: Snowflake,       label: 'Cold Storage',               to: '/farmer/cold-storage' },
     { icon: BookOpen,        label: t('sidebar.jobsTraining'),   to: '/farmer/training' },
+    { icon: RotateCcw,       label: 'Return Requests',            to: '/farmer/returns' },
+    { icon: Truck,           label: 'Logistics',                  to: '/farmer/logistics' },
+    { icon: Award,           label: 'Crop Quality',                to: '/farmer/crop-quality' },
     { icon: Settings,        label: t('sidebar.settings'),       to: '/farmer/settings' },
   ];
 
@@ -34,6 +37,7 @@ export default function Sidebar({ role }: { role: 'farmer' | 'buyer' | 'recruite
     { icon: UserCheck,       label: t('sidebar.bestFarmers'),    to: '/buyer/farmer-matching' },
     { icon: ShieldCheck,     label: t('sidebar.qualityCheck'),   to: '/buyer/quality' },
     { icon: Package,         label: t('sidebar.myOrders'),       to: '/buyer/orders' },
+    { icon: RotateCcw,       label: 'Returns & Policy',           to: '/buyer/returns' },
     { icon: Settings,        label: t('sidebar.settings'),       to: '/buyer/settings' },
   ];
 

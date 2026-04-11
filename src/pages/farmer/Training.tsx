@@ -14,7 +14,7 @@ export interface TrainingVideo {
   id: number;
   title: string;
   description: string;
-  category: 'Crop Training' | 'Soil & Composting' | 'Pest Control' | 'Irrigation' | 'Post-Harvest' | 'Business Skills' | 'Machinery' | 'Dairy';
+  category: 'Crop Training' | 'Soil & Composting' | 'Pest Control' | 'Irrigation' | 'Post-Harvest' | 'Business Skills' | 'Machinery' | 'Dairy' | 'Hydroponics' | 'Aquaponics';
   language: 'Hindi' | 'Marathi' | 'English';
   youtubeId: string;          // YouTube video ID
   thumbnail: string;          // YouTube thumbnail URL
@@ -121,10 +121,50 @@ const trainingVideos: TrainingVideo[] = [
       'Application process'
     ],
     progress: 0,
-  }
+  },
+  {
+    id: 6,
+    title: 'Hydroponics for Beginners',
+    description: 'Learn how to grow crops without soil using nutrient-rich water systems. Perfect for small spaces and urban farming.',
+    category: 'Hydroponics',
+    language: 'English',
+    youtubeId: 'KG5wBjSMtpk',
+    thumbnail: 'https://img.youtube.com/vi/KG5wBjSMtpk/hqdefault.jpg',
+    duration: '12 min',
+    channel: 'Epic Gardening',
+    views: '2M+',
+    uploadedAt: '2024',
+    learnings: [
+      'What is hydroponics',
+      'Types of hydroponic systems',
+      'Nutrient solution management',
+      'Best crops for hydroponics',
+    ],
+    progress: 0,
+  },
+  {
+    id: 7,
+    title: 'Aquaponics Full Setup Guide',
+    description: 'Combine fish farming and plant growing in one sustainable system. Step-by-step aquaponics setup for beginners.',
+    category: 'Aquaponics',
+    language: 'English',
+    youtubeId: 'HYR9s6chrI0',
+    thumbnail: 'https://img.youtube.com/vi/HYR9s6chrI0/hqdefault.jpg',
+    duration: '15 min',
+    channel: 'Bright Agrotech',
+    views: '1.2M+',
+    uploadedAt: '2024',
+    learnings: [
+      'How aquaponics works',
+      'Fish and plant combinations',
+      'Water quality management',
+      'Scaling your system',
+    ],
+    progress: 0,
+  },
 ];
 
-const CATEGORIES = ['All', 'Crop Training', 'Irrigation', 'Soil & Composting', 'Pest Control', 'Post-Harvest', 'Business Skills', 'Machinery', 'Dairy'];
+const CATEGORIES = ['All', 'Crop Training', 'Irrigation', 'Soil & Composting', 'Pest Control', 'Post-Harvest', 'Business Skills', 'Machinery', 'Dairy', 'Hydroponics', 'Aquaponics'];
 const LANGUAGES  = ['All', 'Hindi', 'Marathi', 'English'];
 
 const levelColor: Record<string, string> = {

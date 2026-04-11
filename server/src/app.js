@@ -18,6 +18,8 @@ const analyticsRoutes   = require('./routes/analyticsRoutes');
 const syncRoutes        = require('./routes/syncRoutes');
 const voiceRoutes       = require('./routes/voiceRoutes');
 const aiRoutes          = require('./routes/aiRoutes');
+const coldStorageRoutes = require('./routes/coldStorageRoutes');
+const logisticsRoutes   = require('./routes/logisticsRoutes');
 
 connectDB();
 
@@ -56,8 +58,10 @@ app.use('/api/matching',    matchingRoutes);
 app.use('/api/jobs',        jobRoutes);
 app.use('/api/analytics',   analyticsRoutes);
 app.use('/api/sync',        syncRoutes);
-app.use('/api/voice',       voiceRoutes);
+app.use('/api/voice',        voiceRoutes);
 app.use('/api/ai',          aiRoutes);
+app.use('/api/cold-storage',coldStorageRoutes);
+app.use('/api/logistics',   logisticsRoutes);
 
 // ── 404 ───────────────────────────────────────────────────────────────────────
 app.use((_req, res) => res.status(404).json({ message: 'Route not found' }));

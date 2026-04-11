@@ -19,6 +19,10 @@ import AIPrice from './pages/farmer/AIPrice';
 import Training from './pages/farmer/Training';
 import DemandForecast from './pages/farmer/DemandForecast';
 import BuyerMatching from './pages/farmer/BuyerMatching';
+import ColdStorage from './pages/farmer/ColdStorage';
+import ReturnRequests from './pages/farmer/ReturnRequests';
+import Logistics from './pages/farmer/Logistics';
+import CropQuality from './pages/farmer/CropQuality';
 
 import FarmerMatching from './pages/buyer/FarmerMatching';
 
@@ -28,6 +32,7 @@ import BrowseListings from './pages/buyer/BrowseListings';
 import ListingDetails from './pages/buyer/ListingDetails';
 import QualityVerification from './pages/buyer/QualityVerification';
 import Orders from './pages/buyer/Orders';
+import ReturnPolicy from './pages/buyer/ReturnPolicy';
 
 // Recruiter
 import RecruiterDashboard from './pages/recruiter/RecruiterDashboard';
@@ -68,6 +73,10 @@ function Layout() {
           <Route path="training" element={<Training />} />
           <Route path="demand-forecast" element={<DemandForecast />} />
           <Route path="buyer-matching" element={<BuyerMatching />} />
+          <Route path="cold-storage" element={<ColdStorage />} />
+          <Route path="returns" element={<ReturnRequests />} />
+          <Route path="logistics" element={<Logistics />} />
+          <Route path="crop-quality" element={<CropQuality />} />
           <Route path="settings" element={<Settings />} />
         </Route>
 
@@ -80,6 +89,7 @@ function Layout() {
           <Route path="quality" element={<QualityVerification />} />
           <Route path="farmer-matching" element={<FarmerMatching />} />
           <Route path="orders" element={<Orders />} />
+          <Route path="returns" element={<ReturnPolicy />} />
           <Route path="settings" element={<Settings />} />
         </Route>
 
