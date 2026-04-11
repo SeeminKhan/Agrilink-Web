@@ -173,11 +173,9 @@ export default function AddListing() {
   // ── Voice recording ────────────────────────────────────────────────────────
   const startListening = () => {
     const SR = (
-      (window as unknown as { SpeechRecognition?: SpeechRecognitionCtor; webkitSpeechRecognition?: SpeechRecognitionCtor })
-        .SpeechRecognition ||
-      (window as unknown as { webkitSpeechRecognition?: SpeechRecognitionCtor })
-        .webkitSpeechRecognition
-    );
+      (window as any).SpeechRecognition ||
+      (window as any).webkitSpeechRecognition
+    ) as SpeechRecognitionCtor | undefined;
     if (!SR) { setVoiceError('Voice input not supported in this browser. Try Chrome.'); return; }
 
     const rec = new SR();

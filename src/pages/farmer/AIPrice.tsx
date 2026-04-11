@@ -113,11 +113,9 @@ export default function AIPrice() {
 
   const startListening = () => {
     const SR = (
-      (window as unknown as { SpeechRecognition?: SpeechRecognitionCtor; webkitSpeechRecognition?: SpeechRecognitionCtor })
-        .SpeechRecognition ||
-      (window as unknown as { webkitSpeechRecognition?: SpeechRecognitionCtor })
-        .webkitSpeechRecognition
-    );
+      (window as any).SpeechRecognition ||
+      (window as any).webkitSpeechRecognition
+    ) as SpeechRecognitionCtor | undefined;
     if (!SR) { setVoiceErr('Voice not supported. Try Chrome.'); return; }
     const rec = new SR();
     rec.lang = 'en-IN';

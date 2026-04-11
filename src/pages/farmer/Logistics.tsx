@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
-  Truck, MapPin, Clock, Star, Phone, CheckCircle2,
-  X, ChevronRight, Package, Banknote, Navigation,
+  Truck, Clock, Star, Phone, CheckCircle2,
+  ChevronRight, Package, Banknote, Navigation,
   Snowflake, AlertCircle, Search,
 } from 'lucide-react';
 import { SEED_VEHICLES, logisticsStore, type Vehicle, type LogisticsBooking, type VehicleType } from '../../lib/logisticsStore';
