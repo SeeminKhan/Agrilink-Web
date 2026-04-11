@@ -6,7 +6,9 @@
  */
 import axios from 'axios';
 
-const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:5000/api';
+// VITE_API_URL is the root server URL (e.g. https://agrlink-server.onrender.com)
+// We always append /api so the env var stays clean without a trailing path
+const BASE_URL = `${import.meta.env.VITE_API_URL ?? 'http://localhost:5000'}/api`;
 
 const api = axios.create({
   baseURL: BASE_URL,

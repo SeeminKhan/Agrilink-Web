@@ -31,8 +31,9 @@ export const MH_MARKETS = [
   'Latur', 'Nanded', 'Mumbai', 'Thane',
 ];
 
-const PRICE_API    = 'https://agrilink-ml-3.onrender.com/predict-price';
-const FORECAST_API = 'https://agrilink-ml-3.onrender.com/forecast';
+const ML_BASE      = import.meta.env.VITE_ML_API_URL ?? 'https://agrilink-ml-3.onrender.com';
+const PRICE_API    = `${ML_BASE}/predict-price`;
+const FORECAST_API = `${ML_BASE}/forecast`;
 
 // Normalise crop name for the API
 const normCrop = (crop: string) =>
@@ -112,7 +113,7 @@ export interface MatchResult {
   source: 'api' | 'local';
 }
 
-const MATCH_API = 'https://agrilink-ml-3.onrender.com/match-buyers';
+const MATCH_API = `${ML_BASE}/match-buyers`;
 
 // Haversine distance in km
 function haversine(lat1: number, lon1: number, lat2: number, lon2: number) {
