@@ -3,11 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Briefcase, MapPin, Clock, Banknote, Tag, FileText,
-  Image, ChevronRight, ChevronLeft, CheckCircle, Upload,
+  ChevronRight, ChevronLeft, CheckCircle, Upload,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { jobsStore, type Job } from '../../lib/jobsStore';
-import { slideUp } from '../../lib/motion';
 
 const STEPS = ['Job Details', 'Requirements', 'Review'];
 

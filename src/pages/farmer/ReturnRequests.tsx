@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   RotateCcw, CheckCircle2, XCircle, AlertCircle, Clock,
-  Camera, Package, X, ChevronRight, Snowflake, MessageSquare,
+  Camera, X, ChevronRight, Snowflake, MessageSquare,
 } from 'lucide-react';
 import { returnsStore, reasonLabel, type ReturnRequest, type FarmerAction } from '../../lib/returnsStore';
 

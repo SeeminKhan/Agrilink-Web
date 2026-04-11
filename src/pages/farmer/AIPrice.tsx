@@ -9,6 +9,16 @@ import { useTranslation } from 'react-i18next';
 import { predictPrice, MH_MARKETS, type PriceResult } from '../../lib/priceService';
 import { farmerListingsStore } from '../../lib/farmerListingsStore';
 
+// Browser SpeechRecognition type shim
+type SpeechRecognitionCtor = new () => {
+  lang: string; continuous: boolean; interimResults: boolean;
+  start(): void; stop(): void;
+  onstart: (() => void) | null;
+  onend: (() => void) | null;
+  onerror: (() => void) | null;
+  onresult: ((e: { results: { [i: number]: { [j: number]: { transcript: string } } } }) => void) | null;
+};
+
 const grades  = ['Grade A', 'Grade B', 'Grade C', 'Organic'];
 const seasons = ['kharif', 'rabi', 'zaid'];
 
@@ -74,7 +84,7 @@ export default function AIPrice() {
   const [listening, setListening] = useState(false);
   const [transcript, setTranscript] = useState('');
   const [voiceErr, setVoiceErr]   = useState('');
-  const recRef = useRef<SpeechRecognition | null>(null);
+  const recRef = useRef<ReturnType<SpeechRecognitionCtor> | null>(null);
   const { t } = useTranslation();
 
   const set = (k: keyof typeof form) =>
@@ -102,8 +112,12 @@ export default function AIPrice() {
   };
 
   const startListening = () => {
-    const SR = (window as Window & { SpeechRecognition?: typeof SpeechRecognition; webkitSpeechRecognition?: typeof SpeechRecognition }).SpeechRecognition
-      || (window as Window & { webkitSpeechRecognition?: typeof SpeechRecognition }).webkitSpeechRecognition;
+    const SR = (
+      (window as unknown as { SpeechRecognition?: SpeechRecognitionCtor; webkitSpeechRecognition?: SpeechRecognitionCtor })
+        .SpeechRecognition ||
+      (window as unknown as { webkitSpeechRecognition?: SpeechRecognitionCtor })
+        .webkitSpeechRecognition
+    );
     if (!SR) { setVoiceErr('Voice not supported. Try Chrome.'); return; }
     const rec = new SR();
     rec.lang = 'en-IN';

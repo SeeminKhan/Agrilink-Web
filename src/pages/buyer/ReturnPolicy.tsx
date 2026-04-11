@@ -3,9 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   RotateCcw, CheckCircle2, XCircle, AlertCircle, Clock,
   Camera, FileText, ChevronRight, ShieldCheck, Star,
-  Snowflake, Package, X, Upload,
+  Snowflake, X, Upload,
 } from 'lucide-react';
-import { returnsStore, reasonLabel, type ReturnReason, type ReturnRequest } from '../../lib/returnsStore';
+import { returnsStore, reasonLabel, type ReturnReason } from '../../lib/returnsStore';
 import { ordersStore } from '../../lib/ordersStore';
 
 // ── Status tracker ────────────────────────────────────────────────────────────

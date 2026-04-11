@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import {
   Sprout, LayoutDashboard, List, PlusCircle, Sparkles, BookOpen,
   Settings, LogOut, ChevronLeft, ChevronRight,
-  Search, ShieldCheck, Package, Briefcase, Users, BarChart2, ClipboardList, TrendingUp, UserCheck, Snowflake, RotateCcw, Truck, Award,
+  Search, ShieldCheck, Package, Users, BarChart2, ClipboardList, TrendingUp, UserCheck, Snowflake, RotateCcw, Truck, Award,
 } from 'lucide-react';import { useAuth } from '../../lib/AuthContext';
 
 interface NavItem { icon: React.ElementType; label: string; to: string; }

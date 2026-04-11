@@ -35,8 +35,8 @@ export const setLanguage = (lang: 'en' | 'hi' | 'mr') => {
 
 export type SupportedLang = 'en' | 'hi' | 'mr';
 
-export const LANG_OPTIONS: { code: SupportedLang; label: string; native: string }[] = [
-  { code: 'en', label: 'English', native: 'English' },
-  { code: 'hi', label: 'Hindi',   native: 'हिंदी'   },
-  { code: 'mr', label: 'Marathi', native: 'मराठी'   },
+export const LANG_OPTIONS: { code: SupportedLang; label: string; native: string; flag: string }[] = [
+  { code: 'en', label: 'English', native: 'English', flag: '🇬🇧' },
+  { code: 'hi', label: 'Hindi',   native: 'हिंदी',   flag: '🇮🇳' },
+  { code: 'mr', label: 'Marathi', native: 'मराठी',   flag: '🇮🇳' },
 ];

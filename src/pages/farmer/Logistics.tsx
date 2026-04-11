@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   Truck, MapPin, Clock, Star, Phone, CheckCircle2,
   X, ChevronRight, Package, Banknote, Navigation,
-  Snowflake, AlertCircle, Filter, Search, TruckIcon,
+  Snowflake, AlertCircle, Search,
 } from 'lucide-react';
 import { SEED_VEHICLES, logisticsStore, type Vehicle, type LogisticsBooking, type VehicleType } from '../../lib/logisticsStore';
 import { coldStorageStore } from '../../lib/coldStorageStore';
@@ -344,7 +344,7 @@ function BookingCard({ booking, onAdvance }: { booking: LogisticsBooking; onAdva
         <div>
           <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">Tracking</p>
           <div className="space-y-2">
-            {booking.timeline.map((step, i) => (
+            {booking.timeline.map((step) => (
               <div key={step.label} className="flex items-center gap-3">
                 <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${step.done ? 'bg-green-500' : 'bg-gray-100'}`}>
                   {step.done ? <CheckCircle2 className="w-3.5 h-3.5 text-white" /> : <div className="w-2 h-2 rounded-full bg-gray-300" />}

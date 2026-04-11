@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import {
   facilities as seedFacilities, coldStorageStore,
-  type StorageFacility, type StoredCrop,
+  type StorageFacility,
 } from '../../lib/coldStorageStore';
 
 const statusCfg = {

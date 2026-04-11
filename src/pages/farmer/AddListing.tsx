@@ -10,6 +10,16 @@ import { useTranslation } from 'react-i18next';
 import { farmerListingsStore } from '../../lib/farmerListingsStore';
 import { predictPrice, MH_MARKETS } from '../../lib/priceService';
 
+// Browser SpeechRecognition type shim
+type SpeechRecognitionCtor = new () => {
+  lang: string; continuous: boolean; interimResults: boolean;
+  start(): void; stop(): void;
+  onstart: (() => void) | null;
+  onend: (() => void) | null;
+  onerror: (() => void) | null;
+  onresult: ((e: { results: { [i: number]: { [j: number]: { transcript: string } } } }) => void) | null;
+};
+
 const steps    = ['Crop Info', 'Quantity & Price', 'Photos', 'Review'];
 const grades   = ['Grade A', 'Grade B', 'Grade C', 'Organic'];
 const units    = ['kg', 'quintal', 'tonne', 'bags', 'crates', 'jars', 'bunches', 'pieces', 'trays'];
@@ -131,13 +141,13 @@ export default function AddListing() {
   const [listening, setListening]     = useState(false);
   const [transcript, setTranscript]   = useState('');
   const [voiceError, setVoiceError]   = useState('');
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const recognitionRef = useRef<ReturnType<SpeechRecognitionCtor> | null>(null);
 
   const set = (k: keyof typeof form) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
       setForm(f => ({ ...f, [k]: e.target.value }));
 
-  const fetchAiPrice = useCallback(async (crop: string, quantity: string, grade: string, market: string, season: string, rainfall: string, days: string) => {
+  const fetchAiPrice = useCallback(async (crop: string, quantity: string, grade: string, market: string, _season: string, rainfall: string, days: string) => {
     if (!crop || !quantity || !grade) return;
     setAiLoading(true);
     setAiPrice(null);
@@ -162,8 +172,12 @@ export default function AddListing() {
 
   // ── Voice recording ────────────────────────────────────────────────────────
   const startListening = () => {
-    const SR = (window as Window & { SpeechRecognition?: typeof SpeechRecognition; webkitSpeechRecognition?: typeof SpeechRecognition }).SpeechRecognition
-      || (window as Window & { webkitSpeechRecognition?: typeof SpeechRecognition }).webkitSpeechRecognition;
+    const SR = (
+      (window as unknown as { SpeechRecognition?: SpeechRecognitionCtor; webkitSpeechRecognition?: SpeechRecognitionCtor })
+        .SpeechRecognition ||
+      (window as unknown as { webkitSpeechRecognition?: SpeechRecognitionCtor })
+        .webkitSpeechRecognition
+    );
     if (!SR) { setVoiceError('Voice input not supported in this browser. Try Chrome.'); return; }
 
     const rec = new SR();

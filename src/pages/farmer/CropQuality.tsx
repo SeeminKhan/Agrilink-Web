@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  ShieldCheck, Leaf, Award, Clock, AlertCircle,
+  ShieldCheck, Leaf, Clock, AlertCircle,
   CheckCircle2, TrendingDown, Upload, Link as LinkIcon,
   Sparkles, ChevronRight, Info,
 } from 'lucide-react';
