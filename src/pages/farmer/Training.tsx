@@ -424,13 +424,14 @@ function TrainingModal({ video, onClose }: { video: TrainingVideo; onClose: () =
 
         {/* ── YouTube embed ── */}
         <div className="relative w-full rounded-t-3xl overflow-hidden bg-black"
-          style={{ paddingTop: '56.25%' /* 16:9 */ }}>
+          style={{ paddingTop: '56.25%' }}>
           <iframe
             className="absolute inset-0 w-full h-full"
-            src={`https://www.youtube.com/embed/${video.youtubeId}?rel=0&modestbranding=1&autoplay=1`}
+            src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?rel=0&modestbranding=1&autoplay=1&enablejsapi=1`}
             title={video.title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
             allowFullScreen
+            referrerPolicy="strict-origin-when-cross-origin"
           />
         </div>
 
@@ -509,12 +510,10 @@ function TrainingModal({ video, onClose }: { video: TrainingVideo; onClose: () =
                 style={{ backgroundColor: '#FF0000' }}>
                 <Play className="w-4 h-4 fill-white" /> Watch on YouTube
               </a>
-              {video.progress > 0 && (
-                <button onClick={() => setCompleted(true)}
-                  className="px-5 py-3 rounded-2xl border border-gray-200 text-sm font-semibold text-gray-600 hover:bg-gray-50 transition">
-                  Mark Complete
-                </button>
-              )}
+              <button onClick={() => setCompleted(true)}
+                className="px-5 py-3 rounded-2xl border border-gray-200 text-sm font-semibold text-gray-600 hover:bg-gray-50 transition">
+                Mark Complete
+              </button>
             </div>
           )}
         </div>

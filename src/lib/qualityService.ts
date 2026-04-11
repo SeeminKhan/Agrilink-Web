@@ -2,7 +2,7 @@ import api from './api';
 
 export interface QualityInput {
   crop: string;
-  image_url: string;
+  image_url?: string;
   market?: string;
   harvest_days_ago?: number;
   storage_condition?: 'normal' | 'cold' | 'poor';
@@ -16,6 +16,8 @@ export interface QualityResult {
   defect_percentage: number;
   estimated_shelf_life_days: number;
   recommendation: string;
+  disease_label?: string;
+  urgency_level?: string;
   source?: string;
 }
 
