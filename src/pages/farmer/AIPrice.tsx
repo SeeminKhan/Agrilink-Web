@@ -84,7 +84,7 @@ export default function AIPrice() {
   const [listening, setListening] = useState(false);
   const [transcript, setTranscript] = useState('');
   const [voiceErr, setVoiceErr]   = useState('');
-  const recRef = useRef<ReturnType<SpeechRecognitionCtor> | null>(null);
+  const recRef = useRef<InstanceType<SpeechRecognitionCtor> | null>(null);
   const { t } = useTranslation();
 
   const set = (k: keyof typeof form) =>

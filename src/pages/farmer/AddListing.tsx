@@ -141,7 +141,7 @@ export default function AddListing() {
   const [listening, setListening]     = useState(false);
   const [transcript, setTranscript]   = useState('');
   const [voiceError, setVoiceError]   = useState('');
-  const recognitionRef = useRef<ReturnType<SpeechRecognitionCtor> | null>(null);
+  const recognitionRef = useRef<InstanceType<SpeechRecognitionCtor> | null>(null);
 
   const set = (k: keyof typeof form) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
