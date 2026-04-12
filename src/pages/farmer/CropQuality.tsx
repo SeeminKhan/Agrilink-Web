@@ -7,12 +7,13 @@ import {
 } from 'lucide-react';
 import { analyzeCropQuality, type QualityResult } from '../../lib/qualityService';
 import { MH_MARKETS } from '../../lib/priceService';
+import { useTranslation } from 'react-i18next';
 
 const CROPS = ['Tomato', 'Onion', 'Potato', 'Mango', 'Banana', 'Grapes', 'Orange', 'Wheat', 'Rice', 'Soybean', 'Cabbage', 'Cauliflower'];
-const STORAGE_CONDITIONS = [
-  { value: 'normal', label: 'Normal (Room Temp)' },
-  { value: 'cold',   label: 'Cold Storage' },
-  { value: 'poor',   label: 'Poor Conditions' },
+const STORAGE_CONDITIONS = (t: (k: string) => string) => [
+  { value: 'normal', label: t('cropQuality.storageNormal') },
+  { value: 'cold',   label: t('cropQuality.storageCold') },
+  { value: 'poor',   label: t('cropQuality.storagePoor') },
 ];
 
 const gradeColor = {
@@ -24,6 +25,8 @@ const gradeColor = {
 const inputCls = 'w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-green-300 transition';
 
 export default function CropQuality() {
+  const { t } = useTranslation();
+  const storageConditions = STORAGE_CONDITIONS(t);
   const [form, setForm] = useState({
     crop: 'Tomato',
     image_url: '',
@@ -53,7 +56,7 @@ export default function CropQuality() {
 
   const handleSubmit = async () => {
     const imageUrl = imageMode === 'upload' ? form.image_url : form.image_url;
-    if (!form.crop || !imageUrl) { setError('Please provide a crop name and image URL.'); return; }
+    if (!form.crop || !imageUrl) { setError(t('cropQuality.errorMsg')); return; }
     setLoading(true); setResult(null); setError('');
     try {
       const res = await analyzeCropQuality({
@@ -66,7 +69,7 @@ export default function CropQuality() {
       });
       setResult(res);
     } catch {
-      setError('Quality check failed. Please try again.');
+      setError(t('cropQuality.errorFailed'));
     } finally {
       setLoading(false);
     }
@@ -82,9 +85,9 @@ export default function CropQuality() {
           <div className="w-8 h-8 bg-green-100 rounded-xl flex items-center justify-center">
             <ShieldCheck className="w-4 h-4 text-green-600" />
           </div>
-          <h1 className="text-2xl font-black text-gray-900">Crop Quality Check</h1>
+          <h1 className="text-2xl font-black text-gray-900">{t('cropQuality.title')}</h1>
         </div>
-        <p className="text-gray-500 text-sm">AI-powered quality grading — get grade, freshness score, and sell recommendation.</p>
+        <p className="text-gray-500 text-sm">{t('cropQuality.subtitle')}</p>
       </div>
 
       {/* Input card */}
@@ -93,12 +96,12 @@ export default function CropQuality() {
         {/* Crop + market */}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">Crop *</label>
+            <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">{t('cropQuality.crop')}</label>
             <input list="quality-crops" value={form.crop} onChange={set('crop')} placeholder="e.g. Tomato" className={inputCls} />
             <datalist id="quality-crops">{CROPS.map(c => <option key={c} value={c} />)}</datalist>
           </div>
           <div>
-            <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">Market</label>
+            <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">{t('cropQuality.market')}</label>
             <input list="quality-markets" value={form.market} onChange={set('market')} className={inputCls} />
             <datalist id="quality-markets">{MH_MARKETS.map(m => <option key={m} value={m} />)}</datalist>
           </div>
@@ -106,15 +109,15 @@ export default function CropQuality() {
 
         {/* Image input */}
         <div>
-          <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">Crop Image *</label>
+          <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">{t('cropQuality.cropImage')}</label>
           <div className="flex gap-2 mb-2">
             <button onClick={() => setImageMode('url')}
               className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-bold transition border-2 ${imageMode === 'url' ? 'border-green-500 bg-green-50 text-green-700' : 'border-gray-200 text-gray-500'}`}>
-              <LinkIcon className="w-3.5 h-3.5" /> Image URL
+              <LinkIcon className="w-3.5 h-3.5" /> {t('cropQuality.imageUrl')}
             </button>
             <button onClick={() => setImageMode('upload')}
               className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-bold transition border-2 ${imageMode === 'upload' ? 'border-green-500 bg-green-50 text-green-700' : 'border-gray-200 text-gray-500'}`}>
-              <Upload className="w-3.5 h-3.5" /> Upload Photo
+              <Upload className="w-3.5 h-3.5" /> {t('cropQuality.uploadPhoto')}
             </button>
           </div>
           {imageMode === 'url' ? (
@@ -125,7 +128,7 @@ export default function CropQuality() {
             <div>
               <label className="block border-2 border-dashed border-gray-200 rounded-2xl p-4 text-center cursor-pointer hover:border-green-400 hover:bg-green-50 transition">
                 <Upload className="w-6 h-6 text-gray-400 mx-auto mb-1" />
-                <p className="text-xs font-semibold text-gray-500">Click to upload crop photo</p>
+                <p className="text-xs font-semibold text-gray-500">{t('cropQuality.clickUpload')}</p>
                 <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
               </label>
               {uploadedUrl && (
@@ -149,7 +152,7 @@ export default function CropQuality() {
           <div>
             <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">Storage</label>
             <select value={form.storage_condition} onChange={set('storage_condition')} className={inputCls}>
-              {STORAGE_CONDITIONS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
+              {storageConditions.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
             </select>
           </div>
           <div>

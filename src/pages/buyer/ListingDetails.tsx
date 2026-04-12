@@ -164,9 +164,9 @@ export default function ListingDetails() {
               <MapPin className="w-3 h-3" /> {listing.location}
             </div>
             <div className="flex flex-wrap gap-3 text-xs text-gray-500">
-              <span>⭐ {listing.farmerRating} rating</span>
-              <span>📦 {listing.farmerSales}</span>
-              <span>📅 Member since {listing.farmerJoined}</span>
+              <span className="flex items-center gap-1"><Star className="w-3 h-3 fill-yellow-400 text-yellow-400" /> {listing.farmerRating} rating</span>
+              <span className="flex items-center gap-1"><Package className="w-3 h-3" /> {listing.farmerSales}</span>
+              <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> Member since {listing.farmerJoined}</span>
             </div>
           </div>
           <div className="flex gap-2 shrink-0">
@@ -228,7 +228,7 @@ export default function ListingDetails() {
                       <div key={s} className="flex items-center gap-1 flex-1">
                         <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-black transition-all ${i < step ? 'bg-green-500 text-white' : i === step ? 'text-white' : 'bg-gray-100 text-gray-400'}`}
                           style={i === step ? { backgroundColor: '#0D592A' } : {}}>
-                          {i < step ? '✓' : i + 1}
+                          {i < step ? 'OK' : i + 1}
                         </div>
                         <span className={`text-xs font-semibold hidden sm:block ${i === step ? 'text-gray-800' : 'text-gray-400'}`}>{s}</span>
                         {i < STEPS.length - 1 && <div className={`flex-1 h-0.5 ${i < step ? 'bg-green-400' : 'bg-gray-200'}`} />}

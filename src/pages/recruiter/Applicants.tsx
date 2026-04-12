@@ -80,7 +80,7 @@ function ApplicantDetail({ applicant, onClose, onAccept, onReject }: {
           )}
           {applicant.status !== 'Pending' && (
             <div className={`text-center py-3 rounded-2xl font-bold text-sm ${applicant.status === 'Accepted' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-500'}`}>
-              {applicant.status === 'Accepted' ? '✓ Hired' : '✗ Rejected'}
+              {applicant.status === 'Accepted' ? 'Hired' : 'Rejected'}
             </div>
           )}
         </div>

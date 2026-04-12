@@ -76,7 +76,7 @@ function toListing(fl: FarmerListing): Listing {
     farmerRating:   4.5,
     farmerReviews:  fl.views,
     farmerVerified: fl.status === 'Active',
-    location:       fl.location || 'Africa',
+    location:       fl.location || 'Maharashtra, India',
     lat:            0,
     lng:            0,
     rating:         4.5,

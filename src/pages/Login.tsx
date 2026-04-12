@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
-import { Sprout, Eye, EyeOff, Mail, Lock, ArrowRight, AlertCircle } from 'lucide-react';
+import { Sprout, Eye, EyeOff, Mail, Lock, ArrowRight, AlertCircle, Users, ShoppingBag } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAuth, type Role } from '../lib/AuthContext';
 
@@ -59,28 +59,32 @@ export default function Login() {
             <span className="text-white font-black text-xl">AgriLink</span>
           </Link>
           <div>
-            <div className="inline-block bg-white/10 backdrop-blur border border-white/20 text-white text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              {isFarmer ? '🌾 Farmer Portal' : isRecruiter ? '💼 Recruiter Portal' : '🛒 Buyer Portal'}
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur border border-white/20 text-white text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
+              {isFarmer
+                ? <><Sprout className="w-3.5 h-3.5" /> Farmer Portal</>
+                : isRecruiter
+                ? <><Users className="w-3.5 h-3.5" /> Recruiter Portal</>
+                : <><ShoppingBag className="w-3.5 h-3.5" /> Buyer Portal</>}
             </div>
             <h2 className="text-4xl font-black text-white mb-4 leading-tight">
               {isFarmer ? 'Welcome back,\nFarmer.' : isRecruiter ? 'Welcome back,\nRecruiter.' : 'Welcome back,\nBuyer.'}
             </h2>
             <p className="text-white/70 text-base leading-relaxed">
               {isFarmer
-                ? 'Manage your listings, track sales, and connect with buyers across Africa.'
+                ? 'Manage your listings, track sales, and connect with buyers across India.'
                 : isRecruiter
                 ? 'Post jobs, manage applicants, and hire skilled agricultural workers.'
                 : 'Browse fresh produce, verify quality, and connect directly with farmers.'}
             </p>
             <div className="mt-8 glass rounded-2xl p-4">
               <p className="text-white/80 text-sm italic mb-3">
-                "AgriLink helped me triple my income by selling directly to buyers in the city."
+                "AgriLink helped me triple my income by selling directly to buyers in Mumbai."
               </p>
               <div className="flex items-center gap-3">
-                <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=60&q=80" alt="" className="w-8 h-8 rounded-full object-cover" />
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&q=80" alt="" className="w-8 h-8 rounded-full object-cover" />
                 <div>
-                  <p className="text-white text-xs font-bold">Amara Diallo</p>
-                  <p className="text-white/50 text-xs">Farmer, Senegal</p>
+                  <p className="text-white text-xs font-bold">Ramesh Patil</p>
+                  <p className="text-white/50 text-xs">Farmer, Nashik</p>
                 </div>
               </div>
             </div>
@@ -174,18 +178,6 @@ export default function Login() {
             <span className="text-xs text-gray-400 font-medium">or continue with</span>
             <div className="flex-1 h-px bg-gray-200" />
           </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <button onClick={() => quickLogin('google@demo.com', role)}
-              className="flex items-center justify-center gap-2 bg-white border border-gray-200 rounded-2xl py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition shadow-sm">
-              <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="w-4 h-4" alt="Google" /> Google
-            </button>
-            <button onClick={() => quickLogin('facebook@demo.com', role)}
-              className="flex items-center justify-center gap-2 bg-white border border-gray-200 rounded-2xl py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition shadow-sm">
-              <img src="https://www.svgrepo.com/show/448234/facebook.svg" className="w-4 h-4" alt="Facebook" /> Facebook
-            </button>
-          </div>
-
           <p className="text-center text-xs text-gray-400 mt-6">
             {isFarmer ? t('roles.farmer') : isRecruiter ? t('roles.recruiter') : t('roles.buyer')}?{' '}
             <Link to="/role-select" className="text-green-600 hover:underline font-medium">

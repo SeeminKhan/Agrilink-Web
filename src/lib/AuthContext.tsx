@@ -18,22 +18,22 @@ export interface AuthUser {
 // ── Demo users — used as instant fallback when backend is unreachable ─────────
 const DEMO_USERS: Record<string, AuthUser & { password: string }> = {
   'farmer@demo.com': {
-    name: 'John Mwangi', email: 'farmer@demo.com', password: 'password',
+    name: 'Ramesh Patil', email: 'farmer@demo.com', password: 'password',
     role: 'farmer',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80',
-    location: 'Nairobi, Kenya',
+    location: 'Nashik, Maharashtra',
   },
   'buyer@demo.com': {
-    name: 'Sarah Osei', email: 'buyer@demo.com', password: 'password',
+    name: 'Priya Sharma', email: 'buyer@demo.com', password: 'password',
     role: 'buyer',
     avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&q=80',
-    location: 'Accra, Ghana',
+    location: 'Pune, Maharashtra',
   },
   'recruiter@demo.com': {
-    name: 'David Kariuki', email: 'recruiter@demo.com', password: 'password',
+    name: 'Suresh Mehta', email: 'recruiter@demo.com', password: 'password',
     role: 'recruiter',
     avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&q=80',
-    location: 'Nairobi, Kenya',
+    location: 'Mumbai, Maharashtra',
   },
 };
 
@@ -98,7 +98,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const authUser: AuthUser = {
         ...data.user,
         avatar: data.user.avatar || avatarFor(data.user.role as Role),
-        location: data.user.location || 'Africa',
+        location: data.user.location || 'Maharashtra, India',
       };
       persist(data.token, authUser);
       setUser(authUser);
@@ -121,7 +121,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (isNetworkErr) {
           const guest: AuthUser = {
             name: email.split('@')[0] || 'User', email, role,
-            avatar: avatarFor(role), location: 'Africa',
+            avatar: avatarFor(role), location: 'Maharashtra, India',
           };
           persist('demo_token', guest);
           setUser(guest);
@@ -147,7 +147,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const authUser: AuthUser = {
         ...data.user,
         avatar: data.user.avatar || avatarFor(data.user.role as Role),
-        location: data.user.location || extras.location || 'Africa',
+        location: data.user.location || extras.location || 'Maharashtra, India',
       };
       persist(data.token, authUser);
       setUser(authUser);
@@ -160,7 +160,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const guest: AuthUser = {
           name, email, role,
           avatar: avatarFor(role),
-          location: extras.location || 'Africa',
+          location: extras.location || 'Maharashtra, India',
           phone: extras.phone,
           primaryCrop: extras.primaryCrop,
         };

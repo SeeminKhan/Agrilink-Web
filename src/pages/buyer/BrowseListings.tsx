@@ -7,7 +7,7 @@ import { farmerListingsStore } from '../../lib/farmerListingsStore';
 
 const cropTypes = ['All', 'Vegetables', 'Fruits', 'Grains', 'Dairy & Eggs', 'Honey'];
 const grades = ['All Grades', 'Grade A', 'Grade B', 'Organic'];
-const locations = ['All Locations', 'Kenya', 'Uganda', 'Ghana', 'Nigeria', 'Ethiopia', 'Tanzania'];
+const locations = ['All Locations', 'Maharashtra', 'Nashik', 'Pune', 'Nagpur', 'Aurangabad', 'Solapur'];
 
 export default function BrowseListings() {
   const [allListings, setAllListings] = useState(getListings());
@@ -115,7 +115,7 @@ export default function BrowseListings() {
                 <span className="text-xs text-gray-400">({item.reviews})</span>
               </div>
               <div className="flex items-center justify-between mb-3">
-                <span className="text-green-600 font-black text-lg">${item.price}</span>
+                <span className="text-green-600 font-black text-lg">₹{item.price}</span>
                 <span className="text-xs text-gray-400">/{item.unit} · {item.qty}</span>
               </div>
               <div className="flex gap-2">

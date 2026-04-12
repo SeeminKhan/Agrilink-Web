@@ -148,7 +148,7 @@ export default function PostJob() {
                   <label className={labelClass}>Salary / Wage</label>
                   <div className="relative">
                     <Banknote className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                    <input value={form.wage} onChange={set('wage')} placeholder="e.g. $30/day" className={`${inputClass} pl-9`} />
+                    <input value={form.wage} onChange={set('wage')} placeholder="e.g. ₹800/day" className={`${inputClass} pl-9`} />
                   </div>
                 </div>
               </div>

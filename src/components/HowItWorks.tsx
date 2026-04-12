@@ -1,4 +1,5 @@
 import { UserPlus, Store, ShoppingCart, PackageCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 export default function HowItWorks() {
@@ -41,10 +42,10 @@ export default function HowItWorks() {
         </div>
 
         <div className="text-center mt-14">
-          <a href="/signup" className="inline-flex items-center gap-2 text-white font-semibold px-8 py-3 rounded-xl transition shadow-lg"
+          <Link to="/role-select" className="inline-flex items-center gap-2 text-white font-semibold px-8 py-3 rounded-xl transition shadow-lg"
             style={{ backgroundColor: '#0D592A', boxShadow: '0 4px 16px -2px rgba(13,89,42,0.35)' }}>
             {t('howItWorks.startTrading')}
-          </a>
+          </Link>
         </div>
       </div>
     </section>

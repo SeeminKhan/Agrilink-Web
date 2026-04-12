@@ -2,10 +2,10 @@ import { Target, Eye, Heart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const team = [
-  { name: 'Kofi Mensah', role: 'CEO & Co-Founder', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80' },
-  { name: 'Amina Osei', role: 'CTO', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80' },
-  { name: 'David Kamau', role: 'Head of Operations', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80' },
-  { name: 'Fatou Diallo', role: 'Head of Marketing', img: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=200&q=80' },
+  { name: 'Rahul Deshmukh', role: 'CEO & Co-Founder', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80' },
+  { name: 'Priya Kulkarni', role: 'CTO', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80' },
+  { name: 'Suresh Patil', role: 'Head of Operations', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80' },
+  { name: 'Anita Sharma', role: 'Head of Marketing', img: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=200&q=80' },
 ];
 
 export default function About() {

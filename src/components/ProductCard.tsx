@@ -1,5 +1,6 @@
 import { Heart, Star, MapPin, ShoppingCart } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export interface Product {
   id: number;
@@ -17,6 +18,7 @@ export interface Product {
 
 export default function ProductCard({ product }: { product: Product }) {
   const [liked, setLiked] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group border border-gray-100">
@@ -49,9 +51,11 @@ export default function ProductCard({ product }: { product: Product }) {
             <span className="font-extrabold text-lg" style={{ color: '#0D592A' }}>{product.price}</span>
             <span className="text-gray-400 text-xs">/{product.unit}</span>
           </div>
-          <button className="flex items-center gap-1.5 text-white text-xs font-semibold px-3 py-2 rounded-lg transition hover:opacity-90"
+          <button
+            onClick={() => navigate('/buyer/browse')}
+            className="flex items-center gap-1.5 text-white text-xs font-semibold px-3 py-2 rounded-lg transition hover:opacity-90"
             style={{ backgroundColor: '#0D592A' }}>
-            <ShoppingCart className="w-3.5 h-3.5" /> Add
+            <ShoppingCart className="w-3.5 h-3.5" /> Buy Now
           </button>
         </div>
       </div>

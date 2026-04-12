@@ -422,7 +422,7 @@ export default function ReturnPolicy() {
                   </div>
                   <span className="text-xs font-bold text-green-700">78/100</span>
                 </div>
-                <p className="text-xs text-green-700 font-bold mt-1">Reliable Buyer ✓</p>
+                <p className="text-xs text-green-700 font-bold mt-1">Reliable Buyer</p>
               </div>
               <div className="bg-amber-50 rounded-xl p-4">
                 <div className="flex items-center gap-2 mb-3">
@@ -439,7 +439,7 @@ export default function ReturnPolicy() {
                   </div>
                   <span className="text-xs font-bold text-amber-700">92/100</span>
                 </div>
-                <p className="text-xs text-amber-700 font-bold mt-1">Trusted Farmer ✓</p>
+                <p className="text-xs text-amber-700 font-bold mt-1">Trusted Farmer</p>
               </div>
             </div>
           </div>
@@ -502,7 +502,7 @@ export default function ReturnPolicy() {
                           <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-black shrink-0 ${
                             isRejected ? 'bg-red-500 text-white' : done ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-400'
                           }`}>
-                            {isRejected ? '✗' : done ? '✓' : i + 1}
+                            {isRejected ? 'X' : done ? 'OK' : i + 1}
                           </div>
                           <span className="text-xs text-gray-400 hidden sm:block">{step}</span>
                           {i < 2 && <div className={`flex-1 h-0.5 ${done && i < currentStep ? 'bg-green-400' : 'bg-gray-200'}`} />}

@@ -1,7 +1,7 @@
 import Hero from '../components/Hero';
 import Features from '../components/Features';
 import HowItWorks from '../components/HowItWorks';
-import FeaturedProducts from '../components/FeaturedProducts';
+import RolesSection from '../components/RolesSection';
 import Stats from '../components/Stats';
 import Testimonials from '../components/Testimonials';
 import CTA from '../components/CTA';
@@ -12,8 +12,8 @@ export default function Home() {
       <Hero />
       <Stats />
       <Features />
+      <RolesSection />
       <HowItWorks />
-      <FeaturedProducts />
       <Testimonials />
       <CTA />
     </div>

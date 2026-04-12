@@ -7,8 +7,8 @@ export default function Hero() {
 
   const stats = [
     { icon: Users, value: '50K+', label: t('hero.farmers') },
-    { icon: ShoppingBag, value: '120K+', label: t('hero.products') },
-    { icon: TrendingUp, value: '$2M+', label: t('hero.traded') },
+    { icon: ShoppingBag, value: '1.2L+', label: t('hero.products') },
+    { icon: TrendingUp, value: '₹20Cr+', label: t('hero.traded') },
   ];
 
   return (
@@ -71,7 +71,9 @@ export default function Hero() {
               style={{ color: '#0D592A' }}>
               <ShoppingBag className="w-4 h-4" /> {t('hero.buyerPortal')} <ArrowRight className="w-4 h-4" />
             </Link>
-            <button className="flex items-center gap-2 glass text-white font-semibold px-5 py-3.5 rounded-2xl hover:bg-white/20 transition-all">
+            <button
+              onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+              className="flex items-center gap-2 glass text-white font-semibold px-5 py-3.5 rounded-2xl hover:bg-white/20 transition-all">
               <div className="w-7 h-7 bg-white rounded-full flex items-center justify-center">
                 <Play className="w-3 h-3 fill-current ml-0.5" style={{ color: '#0D592A' }} />
               </div>

@@ -5,15 +5,15 @@ import ProductCard from '../components/ProductCard';
 import type { Product } from '../components/ProductCard';
 
 const allProducts: Product[] = [
-  { id: 1, name: 'Organic Tomatoes', price: '$2.50', unit: 'kg', image: 'https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=400&q=80', seller: 'Green Valley Farm', location: 'Nairobi, Kenya', rating: 4.8, reviews: 124, badge: 'Organic', badgeColor: 'bg-green-500 text-white' },
-  { id: 2, name: 'Fresh Maize', price: '$0.80', unit: 'kg', image: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=400&q=80', seller: 'Sunrise Farms', location: 'Kampala, Uganda', rating: 4.6, reviews: 89, badge: 'Hot Deal', badgeColor: 'bg-orange-500 text-white' },
-  { id: 3, name: 'Premium Avocados', price: '$3.20', unit: 'kg', image: 'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=400&q=80', seller: 'Hillside Orchards', location: 'Meru, Kenya', rating: 4.9, reviews: 210, badge: 'Premium', badgeColor: 'bg-purple-500 text-white' },
-  { id: 4, name: 'Brown Eggs', price: '$4.00', unit: 'tray', image: 'https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400&q=80', seller: 'Happy Hens Farm', location: 'Accra, Ghana', rating: 4.7, reviews: 67 },
-  { id: 5, name: 'Sweet Potatoes', price: '$1.20', unit: 'kg', image: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400&q=80', seller: 'Root & Soil Co.', location: 'Lagos, Nigeria', rating: 4.5, reviews: 43, badge: 'New', badgeColor: 'bg-blue-500 text-white' },
-  { id: 6, name: 'Raw Honey', price: '$8.00', unit: '500g', image: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400&q=80', seller: 'Bee Natural', location: 'Addis Ababa, Ethiopia', rating: 5.0, reviews: 156, badge: 'Best Seller', badgeColor: 'bg-yellow-500 text-white' },
-  { id: 7, name: 'Fresh Spinach', price: '$1.50', unit: 'bunch', image: 'https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400&q=80', seller: 'Leafy Greens Co.', location: 'Dar es Salaam, Tanzania', rating: 4.4, reviews: 31 },
-  { id: 8, name: 'Cassava Flour', price: '$2.00', unit: 'kg', image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&q=80', seller: 'Grain Masters', location: 'Abidjan, Ivory Coast', rating: 4.3, reviews: 55 },
-  { id: 9, name: 'Mango (Alphonso)', price: '$4.50', unit: 'kg', image: 'https://images.unsplash.com/photo-1553279768-865429fa0078?w=400&q=80', seller: 'Tropical Fruits Ltd', location: 'Accra, Ghana', rating: 4.8, reviews: 98, badge: 'Seasonal', badgeColor: 'bg-yellow-400 text-white' },
+  { id: 1, name: 'Organic Tomatoes', price: '₹28', unit: 'kg', image: 'https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=400&q=80', seller: 'Nashik Green Farms', location: 'Nashik, Maharashtra', rating: 4.8, reviews: 124, badge: 'Organic', badgeColor: 'bg-green-500 text-white' },
+  { id: 2, name: 'Fresh Maize', price: '₹18', unit: 'kg', image: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=400&q=80', seller: 'Pune Agro Farms', location: 'Pune, Maharashtra', rating: 4.6, reviews: 89, badge: 'Hot Deal', badgeColor: 'bg-orange-500 text-white' },
+  { id: 3, name: 'Premium Onions', price: '₹22', unit: 'kg', image: 'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=400&q=80', seller: 'Nashik Onion Traders', location: 'Nashik, Maharashtra', rating: 4.9, reviews: 210, badge: 'Premium', badgeColor: 'bg-purple-500 text-white' },
+  { id: 4, name: 'Sweet Potatoes', price: '₹30', unit: 'kg', image: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400&q=80', seller: 'Solapur Root Farm', location: 'Solapur, Maharashtra', rating: 4.7, reviews: 67 },
+  { id: 5, name: 'Organic Turmeric', price: '₹120', unit: 'kg', image: 'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=400&q=80', seller: 'Sangli Spice Farm', location: 'Sangli, Maharashtra', rating: 4.5, reviews: 43, badge: 'New', badgeColor: 'bg-blue-500 text-white' },
+  { id: 6, name: 'Soybean JS-335', price: '₹45', unit: 'kg', image: 'https://images.unsplash.com/photo-1599940824399-b87987ceb72a?w=400&q=80', seller: 'Nagpur Krishi Bazaar', location: 'Nagpur, Maharashtra', rating: 5.0, reviews: 156, badge: 'Best Seller', badgeColor: 'bg-yellow-500 text-white' },
+  { id: 7, name: 'Fresh Spinach', price: '₹25', unit: 'bunch', image: 'https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400&q=80', seller: 'Kolhapur Leafy Farms', location: 'Kolhapur, Maharashtra', rating: 4.4, reviews: 31 },
+  { id: 8, name: 'Wheat (Lokwan)', price: '₹24', unit: 'kg', image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&q=80', seller: 'Aurangabad Grain Traders', location: 'Aurangabad, Maharashtra', rating: 4.3, reviews: 55 },
+  { id: 9, name: 'Alphonso Mango', price: '₹180', unit: 'kg', image: 'https://images.unsplash.com/photo-1553279768-865429fa0078?w=400&q=80', seller: 'Ratnagiri Mango Farm', location: 'Ratnagiri, Maharashtra', rating: 4.8, reviews: 98, badge: 'Seasonal', badgeColor: 'bg-yellow-400 text-white' },
 ];
 
 const categories = ['All', 'Vegetables', 'Fruits', 'Grains', 'Dairy', 'Livestock', 'Honey & Spices'];
@@ -25,10 +25,16 @@ export default function Marketplace() {
   const [sort, setSort] = useState('Newest');
   const { t } = useTranslation();
 
-  const filtered = allProducts.filter(p =>
-    p.name.toLowerCase().includes(search.toLowerCase()) ||
-    p.location.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = allProducts.filter(p => {
+    const matchSearch = p.name.toLowerCase().includes(search.toLowerCase()) ||
+      p.location.toLowerCase().includes(search.toLowerCase());
+    const matchCategory = activeCategory === 'All' ||
+      (activeCategory === 'Vegetables' && ['Tomatoes', 'Onions', 'Spinach', 'Potatoes'].some(v => p.name.includes(v))) ||
+      (activeCategory === 'Fruits' && ['Mango', 'Avocado'].some(v => p.name.includes(v))) ||
+      (activeCategory === 'Grains' && ['Maize', 'Wheat', 'Soybean'].some(v => p.name.includes(v))) ||
+      (activeCategory === 'Honey & Spices' && ['Turmeric', 'Honey'].some(v => p.name.includes(v)));
+    return matchSearch && matchCategory;
+  });
 
   return (
     <div className="min-h-screen bg-gray-50 pt-20">

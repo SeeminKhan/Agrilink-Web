@@ -44,8 +44,8 @@ export default function Stats() {
   const stats = [
     { value: 50000, suffix: '+', label: t('stats.farmers'), color: '#0D592A' },
     { value: 120000, suffix: '+', label: t('stats.products'), color: '#1d4ed8' },
-    { value: 35, suffix: '+', label: t('stats.countries'), color: '#c2410c' },
-    { value: 2, suffix: 'M+', label: t('stats.transactions'), color: '#7c3aed' },
+    { value: 28, suffix: '+', label: t('stats.states'), color: '#c2410c' },
+    { value: 20, suffix: 'Cr+', label: t('stats.transactions'), color: '#7c3aed' },
   ];
 
   return (

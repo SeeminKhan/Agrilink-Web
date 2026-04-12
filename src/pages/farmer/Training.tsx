@@ -440,7 +440,7 @@ function TrainingModal({ video, onClose }: { video: TrainingVideo; onClose: () =
           {/* Tags row */}
           <div className="flex flex-wrap gap-2 mb-3">
             <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${langColor[video.language] || 'bg-gray-100 text-gray-600'}`}>
-              🌐 {video.language}
+              {video.language}
             </span>
             <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-green-100 text-green-700">
               {video.category}
@@ -578,11 +578,11 @@ function JobsTab() {
                 <select value={location} onChange={e => setLocation(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm bg-white outline-none focus:ring-2 focus:ring-green-300">
                   <option value="">All locations</option>
-                  <option>Nairobi, Kenya</option>
-                  <option>Mombasa, Kenya</option>
-                  <option>Kisumu, Kenya</option>
-                  <option>Nakuru, Kenya</option>
-                  <option>Eldoret, Kenya</option>
+                  <option>Nashik, Maharashtra</option>
+                  <option>Pune, Maharashtra</option>
+                  <option>Nagpur, Maharashtra</option>
+                  <option>Aurangabad, Maharashtra</option>
+                  <option>Solapur, Maharashtra</option>
                 </select>
               </div>
               <div>
@@ -725,7 +725,7 @@ function TrainingTab() {
               <button key={l} onClick={() => setLanguage(l)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition ${language === l ? 'text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
                 style={language === l ? { backgroundColor: '#0D592A' } : {}}>
-                {l === 'All' ? '🌐 All' : l === 'Hindi' ? '🇮🇳 Hindi' : l === 'Marathi' ? '🟠 Marathi' : '🇬🇧 English'}
+                {l === 'All' ? 'All' : l === 'Hindi' ? 'Hindi' : l === 'Marathi' ? 'Marathi' : 'English'}
               </button>
             ))}
           </div>

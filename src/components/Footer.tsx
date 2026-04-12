@@ -48,9 +48,9 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-4">{t('footer.contactUs')}</h4>
             <ul className="space-y-3 text-sm">
-              <li className="flex items-start gap-2"><MapPin className="w-4 h-4 mt-0.5 shrink-0" style={{ color: '#4d9d78' }} /><span>123 Farm Road, Nairobi, Kenya</span></li>
-              <li className="flex items-center gap-2"><Phone className="w-4 h-4 shrink-0" style={{ color: '#4d9d78' }} /><span>+254 700 000 000</span></li>
-              <li className="flex items-center gap-2"><Mail className="w-4 h-4 shrink-0" style={{ color: '#4d9d78' }} /><span>hello@agrilink.com</span></li>
+              <li className="flex items-start gap-2"><MapPin className="w-4 h-4 mt-0.5 shrink-0" style={{ color: '#4d9d78' }} /><span>Krishi Bhavan, Nashik, Maharashtra 422001</span></li>
+              <li className="flex items-center gap-2"><Phone className="w-4 h-4 shrink-0" style={{ color: '#4d9d78' }} /><span>+91 98765 43210</span></li>
+              <li className="flex items-center gap-2"><Mail className="w-4 h-4 shrink-0" style={{ color: '#4d9d78' }} /><span>hello@agrilink.in</span></li>
             </ul>
             <div className="mt-5">
               <p className="text-sm mb-2 text-gray-400">{t('footer.newsletter')}</p>

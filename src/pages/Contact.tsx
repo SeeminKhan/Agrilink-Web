@@ -17,9 +17,9 @@ export default function Contact() {
             <h2 className="text-2xl font-bold text-gray-800 mb-6">{t('contact.infoTitle')}</h2>
             <div className="space-y-5 mb-8">
               {[
-                { icon: MapPin, label: t('contact.address'), value: '123 Farm Road, Nairobi, Kenya' },
-                { icon: Phone, label: t('contact.phone'), value: '+254 700 000 000' },
-                { icon: Mail, label: t('contact.email'), value: 'hello@agrilink.com' },
+                { icon: MapPin, label: t('contact.address'), value: 'Krishi Bhavan, Nashik, Maharashtra 422001' },
+                { icon: Phone, label: t('contact.phone'), value: '+91 98765 43210' },
+                { icon: Mail, label: t('contact.email'), value: 'hello@agrilink.in' },
               ].map(({ icon: Icon, label, value }) => (
                 <div key={label} className="flex items-start gap-4">
                   <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center shrink-0">

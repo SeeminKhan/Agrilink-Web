@@ -41,8 +41,8 @@ const SEED_RAW = [
     qty: '500', unit: 'kg', price: 28, location: 'Nashik, Maharashtra',
     description: 'Premium desi tomatoes grown using 100% organic methods. No pesticides.',
     status: 'Active' as ListingStatus,
-    img: 'https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=600&q=90',
-    images: ['https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=600&q=90', 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=600&q=90'],
+    img: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=600&q=90',
+    images: ['https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=600&q=90', 'https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=600&q=90'],
     views: 142, harvestDate: '10 Jan 2025', createdAt: '8 Jan 2025', batchId: 'AGRL-2025-TOM-001',
   },
   {
@@ -77,8 +77,8 @@ const SEED_RAW = [
     qty: '200', unit: 'kg', price: 120, location: 'Sangli, Maharashtra',
     description: 'Pure organic turmeric with high curcumin content. Certified organic.',
     status: 'Active' as ListingStatus,
-    img: 'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=600&q=90',
-    images: ['https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=600&q=90'],
+    img: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=600&q=90',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=600&q=90'],
     views: 305, harvestDate: '9 Jan 2025', createdAt: '5 Jan 2025', batchId: 'AGRL-2025-TUR-005',
   },
   {

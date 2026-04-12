@@ -13,6 +13,7 @@ export default function Signup() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [location, setLocation] = useState('');
+  const [primaryCrop, setPrimaryCrop] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -32,7 +33,7 @@ export default function Signup() {
       email,
       password,
       role,
-      { phone, location }
+      { phone, location, primaryCrop: role === 'farmer' ? primaryCrop : undefined }
     );
     setLoading(false);
     if (result.ok) {
@@ -135,7 +136,7 @@ export default function Signup() {
               <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">{t('auth.phone')}</label>
               <div className="relative">
                 <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input type="tel" placeholder="+254 700 000 000" value={phone} onChange={e => setPhone(e.target.value)} className={inputClass} />
+                <input type="tel" placeholder="+91 98765 43210" value={phone} onChange={e => setPhone(e.target.value)} className={inputClass} />
               </div>
             </div>
 
@@ -143,9 +144,19 @@ export default function Signup() {
               <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">{t('auth.location')}</label>
               <div className="relative">
                 <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input type="text" placeholder="City, Country" value={location} onChange={e => setLocation(e.target.value)} className={inputClass} />
+                <input type="text" placeholder="City, Maharashtra" value={location} onChange={e => setLocation(e.target.value)} className={inputClass} />
               </div>
             </div>
+
+            {role === 'farmer' && (
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Primary Crop</label>
+                <div className="relative">
+                  <input type="text" placeholder="e.g. Tomato, Onion, Wheat" value={primaryCrop} onChange={e => setPrimaryCrop(e.target.value)}
+                    className="w-full px-4 py-3.5 bg-white border border-gray-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-green-400 transition-all shadow-sm" />
+                </div>
+              </div>
+            )}
 
             <div>
               <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">{t('auth.password')} *</label>

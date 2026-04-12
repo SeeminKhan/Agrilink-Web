@@ -3,21 +3,21 @@ import { useTranslation } from 'react-i18next';
 
 const testimonials = [
   {
-    name: 'Amara Diallo', role: 'Smallholder Farmer', location: 'Senegal',
-    avatar: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=100&q=80',
-    text: 'AgriLink changed my life. I used to sell through middlemen and barely made a profit. Now I sell directly to buyers in the city and earn 3x more.',
+    name: 'Ramesh Patil', role: 'Smallholder Farmer', location: 'Nashik, Maharashtra',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80',
+    text: 'AgriLink changed my life. I used to sell through middlemen and barely made a profit. Now I sell directly to buyers in Pune and earn 3x more.',
     rating: 5,
   },
   {
-    name: 'Kwame Asante', role: 'Restaurant Owner', location: 'Ghana',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80',
+    name: 'Priya Sharma', role: 'Wholesale Buyer', location: 'Pune, Maharashtra',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&q=80',
     text: 'I source all my vegetables through AgriLink. The quality is consistently excellent and the prices are fair. Delivery is always on time.',
     rating: 5,
   },
   {
-    name: 'Fatima Nkosi', role: 'Agri-Business Owner', location: 'South Africa',
-    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&q=80',
-    text: 'The market insights feature alone is worth it. I can see price trends and plan my harvests accordingly. My revenue has grown 40% this year.',
+    name: 'Suresh Mehta', role: 'Agri-Business Owner', location: 'Mumbai, Maharashtra',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80',
+    text: 'The mandi price insights feature alone is worth it. I can see price trends and plan my harvests accordingly. My revenue has grown 40% this year.',
     rating: 5,
   },
 ];

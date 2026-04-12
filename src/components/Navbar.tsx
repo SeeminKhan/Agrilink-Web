@@ -6,9 +6,9 @@ import { useAuth } from '../lib/AuthContext';
 import { setLanguage, LANG_OPTIONS, type SupportedLang } from '../lib/i18n';
 
 const navLinks = [
-  { labelKey: 'nav.home',     to: '/' },
-  { labelKey: 'nav.about',    to: '/about' },
-  { labelKey: 'nav.features', to: '/features' },
+  { labelKey: 'nav.home',        sectionId: '' },
+  { labelKey: 'nav.whyAgrilink', sectionId: 'why-agrilink' },
+  { labelKey: 'nav.howItWorks',  sectionId: 'how-it-works' },
 ];
 
 export default function Navbar() {
@@ -27,35 +27,41 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  const handleNavClick = (sectionId: string) => {
+    setOpen(false);
+    if (!sectionId) { navigate('/'); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' }), 150);
+    } else {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const handleLogout = () => { logout(); navigate('/'); setOpen(false); };
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-2">
+          <button onClick={() => handleNavClick('')} className="flex items-center gap-2">
             <div className="p-1.5 rounded-lg" style={{ backgroundColor: '#0D592A' }}>
               <Sprout className="w-5 h-5 text-white" />
             </div>
             <span className={`text-xl font-bold ${scrolled ? '' : 'text-white'}`} style={scrolled ? { color: '#0D592A' } : {}}>AgriLink</span>
-          </Link>
+          </button>
 
           <div className="hidden md:flex items-center gap-6">
             {navLinks.map(link => (
-              <Link key={link.to} to={link.to}
-                className={`text-sm font-medium transition-colors ${
-                  location.pathname === link.to
-                    ? scrolled ? '' : 'text-green-300'
-                    : scrolled ? 'text-gray-700 hover:text-gray-900' : 'text-white/80 hover:text-white'
-                }`}
-                style={location.pathname === link.to && scrolled ? { color: '#0D592A' } : {}}>
+              <button key={link.labelKey}
+                onClick={() => handleNavClick(link.sectionId)}
+                className={`text-sm font-medium transition-colors ${scrolled ? 'text-gray-700 hover:text-gray-900' : 'text-white/80 hover:text-white'}`}>
                 {t(link.labelKey)}
-              </Link>
+              </button>
             ))}
           </div>
 
           <div className="hidden md:flex items-center gap-3">
-            {/* Language switcher */}
             <div className="relative">
               <button onClick={() => setLangOpen(o => !o)}
                 className={`flex items-center gap-1.5 text-sm font-medium px-3 py-2 rounded-lg transition ${scrolled ? 'hover:bg-gray-100 text-gray-600' : 'text-white/80 hover:bg-white/10'}`}>
@@ -93,7 +99,7 @@ export default function Navbar() {
                   style={scrolled ? { color: '#0D592A' } : {}}>
                   Login
                 </Link>
-                <Link to="/role-select" className="text-sm font-medium px-4 py-2 text-white rounded-lg hover:opacity-90 transition" style={{ backgroundColor: '#0D592A' }}>
+                <Link to="/login" className="text-sm font-medium px-4 py-2 text-white rounded-lg hover:opacity-90 transition" style={{ backgroundColor: '#0D592A' }}>
                   Get Started
                 </Link>
               </>
@@ -109,11 +115,11 @@ export default function Navbar() {
       {open && (
         <div className="md:hidden bg-white shadow-lg px-4 pb-4 pt-2">
           {navLinks.map(link => (
-            <Link key={link.to} to={link.to} onClick={() => setOpen(false)}
-              className="block py-2 text-gray-700 font-medium text-sm hover:opacity-80 transition"
-              style={location.pathname === link.to ? { color: '#0D592A' } : {}}>
+            <button key={link.labelKey}
+              onClick={() => handleNavClick(link.sectionId)}
+              className="block w-full text-left py-2 text-gray-700 font-medium text-sm hover:opacity-80 transition">
               {t(link.labelKey)}
-            </Link>
+            </button>
           ))}
           <div className="flex gap-3 mt-3">
             {user ? (
@@ -130,7 +136,7 @@ export default function Navbar() {
                   className="flex-1 text-center py-2 border rounded-lg text-sm font-medium" style={{ borderColor: '#0D592A', color: '#0D592A' }}>
                   Login
                 </Link>
-                <Link to="/role-select" onClick={() => setOpen(false)}
+                <Link to="/login" onClick={() => setOpen(false)}
                   className="flex-1 text-center py-2 text-white rounded-lg text-sm font-medium" style={{ backgroundColor: '#0D592A' }}>
                   Get Started
                 </Link>

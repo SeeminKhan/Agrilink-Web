@@ -214,7 +214,7 @@ export default function FarmerDashboard() {
                 <p className="font-semibold text-gray-800 text-sm truncate">{item.name}</p>
                 <p className="text-xs text-gray-400">{item.qty} {item.unit} · {item.variety}</p>
               </div>
-              <p className="text-sm font-bold text-gray-700 hidden sm:block">${item.price}/{item.unit}</p>
+              <p className="text-sm font-bold text-gray-700 hidden sm:block">₹{item.price}/{item.unit}</p>
               <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${statusColor[item.status]}`}>{item.status}</span>
             </div>
           ))}
